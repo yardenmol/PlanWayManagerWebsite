@@ -40,15 +40,13 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.zoom = 11;
-    this.latitude = 32.0301334;
-    this.longitude = 34.9501432;
+    this.zoom = 10;
+    this.latitude = 32.1021679;
+    this.longitude = 34.8224296999999;
     this.locations = [{lat: 31.9993516, lng: 34.945046, name: "Yarden"},
                       {lat: 32.0729577, lng: 34.7895258999999, name: "Tomer"},
                       {lat: 32.1024617, lng: 34.8767515, name: "Maayan"},
                       {lat: 32.012808, lng: 34.780877, name: "Elad"}]
-
-    this.setCurrentPosition();
 
     this.getTasks();
 

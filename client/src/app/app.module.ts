@@ -11,7 +11,6 @@ import { AgmCoreModule } from '@agm/core';
 import { HomeComponent } from './components/home/home.component';
 import { EditTaskComponent } from './components/edit-task/edit-task.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { AboutusComponent } from './components/aboutus/aboutus.component';
 import { NvD3Module } from 'ng2-nvd3';
 import  {Ng2SearchPipeModule} from "ng2-search-filter";
 import {appRoutes} from "./app-routing.module";
@@ -24,7 +23,7 @@ import {Router, RouterModule} from "@angular/router";
 
 
 @NgModule({
-  declarations: [AppComponent, TasksComponent, GoogleMapsComponent, HomeComponent, EditTaskComponent, NavbarComponent, AboutusComponent, ChartsComponent, AdminComponent],
+  declarations: [AppComponent, TasksComponent, GoogleMapsComponent, HomeComponent, EditTaskComponent, NavbarComponent, ChartsComponent, AdminComponent],
   imports: [
     BrowserModule,
     CommonModule,

@@ -1,12 +1,28 @@
-<nav class="navbar navbar-light">
-  <img src="https://www.ptmspropertytax.com/wp-content/header-images/banner-innerbg40.png" width="1090" height="80">
-  <!--<a href="/aboutus">-->
-  <a (click)="aboutus()">
-    <img id="aboutUs" src="../../../assets/images/aboutUs.png" width="80" height="80" >
+<img src="../../../assets/images/PlanWay-logo.jpeg" height="110px ">
 
-  </a>
-  <a href="/">
-    <img id="logout" src="../../../assets/images/LogOut2.png" width="80" height="80" >
-  </a>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"> </a>
+    </div>
 
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav" routerLinkActive="active">
+        <li class="nav-item"><a class="nav-link" [routerLink] = "['addresses']" >Home</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink] = "['ether_about']" >Destinations</a></li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">LogOut</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>

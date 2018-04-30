@@ -50,11 +50,6 @@ body {
     min-width: 500px;
   }
 }
-
-#delete,#edit {
-  -webkit-transition: width 2s; /* Safari */
-  transition: width 2s;
-}
 #edit:hover {
   width: 150px;
 }

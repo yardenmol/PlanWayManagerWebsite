@@ -1,6 +1,5 @@
 <app-navbar></app-navbar>
 <div class="panel-title text-center">
-  <h1 class="title" ><b>Welcome Admin</b></h1>
   <hr />
 </div>
 
@@ -65,12 +64,15 @@
     <div #containerPieChart></div>
   </div>
 
+<div class="col-md-10 col-md-offset-1">
   <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-     <div *ngFor="let location of locations">
+    <div *ngFor="let location of locations">
       <agm-marker [latitude]="location.lat" [longitude]="location.lng" [iconUrl]="'../../../assets/images/track2.png'">
         <agm-info-window>{{location.name}}<br>{{location.address}}</agm-info-window>
       </agm-marker>
     </div>
   </agm-map>
+</div>
+
 
   <br><br>
