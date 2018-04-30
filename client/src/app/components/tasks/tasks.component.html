@@ -1,0 +1,94 @@
+<app-navbar></app-navbar>
+<br>
+<div class="container">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group" id="adv-search">
+          <input type="text" class="form-control" [(ngModel)]="searchName1" name="searchName1" placeholder="Search for task" />
+          <div class="input-group-btn">
+            <div class="btn-group" role="group">
+              <div class="dropdown dropdown-lg">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                  <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                      <label for="filter">Filter by</label>
+                      <select class="form-control" [(ngModel)]="done" name="done" >
+                        <option value="0" selected>Done & Not Done</option>
+                        <option value="1">Done</option>
+                        <option value="2">Not Done</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="contain">Name</label>
+                      <input class="form-control" type="text" [(ngModel)]="searchName2" name="searchName2"  placeholder="Enter task's name" />
+                    </div>
+                    <div class="form-group">
+                      <label for="contain">From date</label>
+                      <input class="form-control" type="datetime-local" [(ngModel)]="date" name="date" />
+                    </div>
+                    <button type="submit" (click)="search($event)" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                  </form>
+                </div>
+              </div>
+              <button type="button" (click)="refresh()"   class="btn btn-primary"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+    <div class="text-center">
+      Do you want to add {{maxtask}} task?
+      <a (click)="addmax()">
+        <span class="glyphicon glyphicon-plus-sign"></span>
+      </a>
+    </div>
+
+
+
+  <br><br>
+  <form class="well" (submit)="addTask($event)">
+    <div class="form-group">
+      <input type="text" [(ngModel)]="name" name="name" class="form-control" placeholder="Add Task...">
+    </div>
+  </form>
+
+  <div class="task-list">
+    <div *ngFor="let task of tasks | filter: searchName1" >
+      <div class="col-md-1">
+        <input type="checkbox" [checked]="task.isDone" (click)="updateStatus(task)">
+      </div>
+      <div class="col-md-7">
+        <div id="task">{{task.name}}</div>
+      </div>
+
+      <div dir="rtl" class="col=md-4">
+        <input type="button" id="delete" (click)="deleteTask(task._id)" value="Delete" class="btn btn-danger">
+        <input type="button" id="edit" (click)="editTask(task._id)" value="Edit" class="btn btn-default">
+      </div>
+      <br>
+    </div>
+  </div>
+
+
+  <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+    <agm-marker [latitude]="latitude" [longitude]="longitude">
+      <agm-info-window>Your Current Location<br></agm-info-window>
+    </agm-marker>
+    <div *ngFor="let location of locations">
+      <agm-marker [latitude]="location.lat" [longitude]="location.lng">
+        <agm-info-window>{{location.name}}<br>{{location.address}}</agm-info-window>
+      </agm-marker>
+    </div>
+  </agm-map>
+</div>
+
+<div class="pie">
+  <div #containerPieChart></div>
+</div>
+
+

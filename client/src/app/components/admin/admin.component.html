@@ -1,0 +1,76 @@
+<app-navbar></app-navbar>
+<div class="panel-title text-center">
+  <h1 class="title" ><b>Welcome Admin</b></h1>
+  <hr />
+</div>
+
+<div class="container">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group" id="adv-search">
+          <input type="text" class="form-control" [(ngModel)]="searchName1" name="searchName1" placeholder="Search for user" />
+          <div class="input-group-btn">
+            <div class="btn-group" role="group">
+              <div class="dropdown dropdown-lg">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                  <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                      <label for="filter">Filter by</label>
+                      <select class="form-control" [(ngModel)]="done" name="done" >
+                        <option value="0" selected>Done & Not Done</option>
+                        <option value="1">Done</option>
+                        <option value="2">Not Done</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="contain">Name Task</label>
+                      <input class="form-control" type="text" [(ngModel)]="searchName2" name="searchName2"  placeholder="Enter task's name" />
+                    </div>
+                    <div class="form-group">
+                      <label for="contain">From date</label>
+                      <input class="form-control" type="datetime-local" [(ngModel)]="date" name="date" />
+                    </div>
+                    <button type="submit" (click)="search($event)" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                  </form>
+                </div>
+              </div>
+              <button type="button" (click)="refresh()"   class="btn btn-primary"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div  class="col-md-4 col-md-offset-1">
+    <div *ngFor="let user of tasks  | filter: searchName1">
+      <fieldset>
+        <legend>{{user.name}}</legend>
+        <div *ngFor="let task of user.tasks">
+          <div>
+            <input type="checkbox" [checked]="task.isDone" (click)="updateStatus(user.name,task)">
+            <label>{{task.name}}</label>
+          </div>
+        </div>
+      </fieldset>
+      <br>
+    </div>
+  </div>
+
+  <div class="pie">
+    <div #containerPieChart></div>
+  </div>
+
+  <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+     <div *ngFor="let location of locations">
+      <agm-marker [latitude]="location.lat" [longitude]="location.lng" [iconUrl]="'../../../assets/images/track2.png'">
+        <agm-info-window>{{location.name}}<br>{{location.address}}</agm-info-window>
+      </agm-marker>
+    </div>
+  </agm-map>
+
+  <br><br>

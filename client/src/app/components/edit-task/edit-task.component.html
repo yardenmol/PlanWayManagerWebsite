@@ -1,0 +1,56 @@
+<app-navbar [id]="id"></app-navbar>
+<!--<div class="container">-->
+  <div class="row">
+    <div class="col-md-6">
+
+      <form class="form-horizontal" action="" method="post">
+        <fieldset>
+          <div class="col-md-8 col-md-offset-8">
+            <legend class="text-center">Edit Driver's Task</legend>
+
+            <!-- Name input-->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="name">Task</label>
+              <div class="col-md-9 col-md-offset-1">
+                <input id="name" name="name" [(ngModel)]="name" type="text" placeholder="Your task" class="form-control">
+              </div>
+            </div>
+
+            <!-- from date input-->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="fromDate">Opening Time</label>
+              <div class="col-md-9 col-md-offset-1">
+                <input id="fromDate" name="fromDate" [(ngModel)]="fromDate" type="datetime-local" placeholder="From date" class="form-control">
+              </div>
+            </div>
+
+            <!-- to date input-->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="toDate">Closing Time</label>
+              <div class="col-md-9 col-md-offset-1">
+                <input id="toDate"  name="toDate" [(ngModel)]="toDate" type="datetime-local" placeholder="To date" class="form-control">
+              </div>
+            </div>
+        </div>
+
+          <!-- <label class="col-md-3 control-label">Location</label>-->
+          <div class="form-group">
+            <div class="col-md-8">
+              <app-google-maps [uid]="uid" [address]="address" [latitude]="lat" [longitude]="lng" (notifyLocation)='onNotify($event)'></app-google-maps>
+            </div>
+          </div>
+
+          <!-- Form actions -->
+          <div class="col-md-6 col-md-offset-8">
+            <div class="form-group">
+              <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-primary btn-lg" (click)="editTask()">Submit</button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+      </form>
+    </div>
+  </div>
+<!--</div>-->
