@@ -48,7 +48,10 @@
   <div  class="col-md-4 col-md-offset-1">
     <div *ngFor="let user of tasks  | filter: searchName1">
       <fieldset>
-        <legend>{{user.name}}</legend>
+        <legend>
+          {{user.name}}
+          <input type="button" (click)="editUser(user._id)" value="Edit" class="btn btn-default">
+        </legend>
         <div *ngFor="let task of user.tasks">
           <div>
             <input type="checkbox" [checked]="task.isDone" (click)="updateStatus(user.name,task)">
@@ -64,15 +67,14 @@
     <div #containerPieChart></div>
   </div>
 
-<div class="col-md-10 col-md-offset-1">
-  <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-    <div *ngFor="let location of locations">
-      <agm-marker [latitude]="location.lat" [longitude]="location.lng" [iconUrl]="'../../../assets/images/track2.png'">
-        <agm-info-window>{{location.name}}<br>{{location.address}}</agm-info-window>
-      </agm-marker>
-    </div>
-  </agm-map>
-</div>
-
+  <div  class="col-md-10 col-md-offset-1">
+    <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+      <div *ngFor="let location of locations">
+        <agm-marker [latitude]="location.lat" [longitude]="location.lng" [iconUrl]="'../../../assets/images/track2.png'">
+          <agm-info-window>{{location.name}}<br>{{location.address}}</agm-info-window>
+        </agm-marker>
+      </div>
+    </agm-map>
+  </div>
 
   <br><br>

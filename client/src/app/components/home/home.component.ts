@@ -18,13 +18,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngAfterViewInit(){
-    var canvas = <HTMLCanvasElement> document.getElementById("myCanvas");
-    var ctx= canvas.getContext("2d");
-    ctx.font="bold 40px Segoe Print";
-    ctx.fillText("To Do List", 40, 40);
-  }
-
   register(event){
     event.preventDefault();
     var newUser = {

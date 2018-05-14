@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {AdminService} from "../../services/admin.service";
-import {connectableObservableDescriptor} from "rxjs/observable/ConnectableObservable";
-import {TwitterService} from "../../services/twitter.service";
 //d3
 import {ElementRef, ViewChild, Input} from "@angular/core";
 import * as D3 from "d3-3";
 import {IData} from "../../data.interface";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin',
@@ -36,17 +35,19 @@ export class AdminComponent implements OnInit {
   public locations;
   public zoom: number;
 
-  constructor(private AdminService:AdminService, private twitterService:TwitterService){
+  constructor(private AdminService:AdminService, private router: Router){
   }
 
   ngOnInit() {
-    this.zoom = 10;
-    this.latitude = 32.1021679;
-    this.longitude = 34.8224296999999;
+  //google-maps
+    this.zoom = 11;
+    this.latitude = 32.0301334;
+    this.longitude = 34.9501432;
     this.locations = [{lat: 31.9993516, lng: 34.945046, name: "Yarden"},
-                      {lat: 32.0729577, lng: 34.7895258999999, name: "Tomer"},
-                      {lat: 32.1024617, lng: 34.8767515, name: "Maayan"},
-                      {lat: 32.012808, lng: 34.780877, name: "Elad"}]
+      {lat: 32.0729577, lng: 34.7895258999999, name: "Tomer"},
+      {lat: 32.1024617, lng: 34.8767515, name: "Maayan"},
+      {lat: 32.012808, lng: 34.780877, name: "Elad"}]
+
 
     this.getTasks();
 
@@ -54,15 +55,6 @@ export class AdminComponent implements OnInit {
     this.htmlElement = this.element.nativeElement;
     this.host = D3.select(this.htmlElement);
     this.getPieData();
-  }
-
-  private setCurrentPosition() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-      });
-    }
   }
 
   getTasks(){
@@ -197,25 +189,7 @@ export class AdminComponent implements OnInit {
       .style("text-anchor", "middle");
   }
 
-
-  //post tweet
-  postTweet($event){
-    console.log(this.pieData.length);
-    $event.preventDefault();
-    var finishPre;
-    if(this.pieData.length == 2){
-      if(this.pieData[0].label=="Done")
-        finishPre = (this.pieData[0].value * 100) / (this.pieData[0].value + this.pieData[1].value)
-      else
-        finishPre = (this.pieData[1].value * 100) / (this.pieData[0].value + this.pieData[1].value)
-
-      var text = "Hey everyone!! you finish "+Number(finishPre).toFixed(2)+"% of your tasks! keep work hard!"
-      this.twitterService.postTweet(text).subscribe(data =>{
-      });
-    }
-
-
+  editUser(uid){
+    this.router.navigate(['/tasks',uid]);
   }
-
-
 }
