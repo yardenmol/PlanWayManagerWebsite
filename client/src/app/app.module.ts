@@ -18,12 +18,13 @@ import {appRoutes} from "./app-routing.module";
 import 'nvd3';
 import { ChartsComponent } from './components/charts/charts.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { DestinationsComponent} from "./components/destinations/destinations.component";
 import {Router, RouterModule} from "@angular/router";
 
 
 
 @NgModule({
-  declarations: [AppComponent, TasksComponent, GoogleMapsComponent, HomeComponent, EditTaskComponent, NavbarComponent, ChartsComponent, AdminComponent],
+  declarations: [AppComponent, TasksComponent, GoogleMapsComponent, HomeComponent, EditTaskComponent, NavbarComponent, ChartsComponent, AdminComponent, DestinationsComponent],
   imports: [
     BrowserModule,
     CommonModule,
