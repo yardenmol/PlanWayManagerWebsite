@@ -6,6 +6,7 @@ var index = require('./routes/index');
 var tasks = require('./routes/tasks');
 var authentication = require('./routes/authentication');
 var admin = require('./routes/admin');
+var firebase_auth = require('./routes/firebaseAuthentication');
 var cors = require('cors');
 var app = express();
 
@@ -26,4 +27,5 @@ app.use('/', index);
 app.use('/api',tasks.router);
 app.use('/authentication', authentication);
 app.use('/admin',admin.router);
+app.use('/fauthentication', firebase_auth.router);
 module.exports = app;
