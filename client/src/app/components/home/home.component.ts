@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { UserService} from "../../services/user.service";
+import { ManagerService } from "../../services/manager.service";
 import * as io from 'socket.io-client'
 
 @Component({
@@ -9,62 +9,69 @@ import * as io from 'socket.io-client'
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  name: string;
+  email: string;
   password: string;
   message: string;
 
-  constructor(private userService:UserService, private router: Router) { }
+  constructor(private managerService: ManagerService, private router: Router) {
+  }
 
   ngOnInit() {
   }
 
-  register(event){
+  register(event) {
     event.preventDefault();
-    var newUser = {
-      name: this.name,
+    var newManager = {
+      email: this.email,
       password: this.password
     }
-    this.userService.addUser(newUser).
-    subscribe(data=>{
-      if (data["success"]){
-        this.router.navigate(['/tasks',data["id"]]);
+    this.managerService.managerLogin(newManager).subscribe(data => {
+      if (data["success"]) {
+        console.log("success");
+        this.router.navigate(['/usermanagement',data["mid"]]);
       }
-      else
-        this.message=data["message"];
+      else{
+        console.log("register failed")
+        this.message = data["message"];
+      }
     });
   }
 
-  login(event){
+  login(event) {
     event.preventDefault();
-    var newUser = {
-      name: this.name,
+    var manager = {
+      email: this.email,
       password: this.password
     }
-    this.userService.login(newUser).
-    subscribe(data=>{
-      if (data["success"]){
-        this.router.navigate(['/tasks',data["id"]]);
+    this.managerService.managerLogin(manager).subscribe(data => {
+      if (data["success"]) {
+        console.log("success");
+        this.router.navigate(['/usermanagement',data["mid"]]);
       }
-      else
-        this.message=data["message"];
+      else{
+        console.log("login failed")
+        this.message = data["message"];
+      }
+
     });
   }
 
-  admin(event){
-    event.preventDefault();
-    var newAdmin = {
-      name: this.name,
-      password: this.password
-    }
-    this.userService.admin(newAdmin).
-    subscribe(data=>{
-      if (data["success"]){
-        this.router.navigate(['/admin']);
-      }
-      else
-        this.message=data["message"];
-    });
+  admin(event) {
+    //   event.preventDefault();
+    //   var newAdmin = {
+    //     name: this.name,
+    //     password: this.password
+    //   }
+    //   this.userService.admin(newAdmin).
+    //   subscribe(data=>{
+    //     if (data["success"]){
+    //       this.router.navigate(['/admin']);
+    //     }
+    //     else
+    //       this.message=data["message"];
+    //   });
+    // }
+
+
   }
-
-
 }

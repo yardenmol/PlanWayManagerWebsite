@@ -20,11 +20,13 @@ import { ChartsComponent } from './components/charts/charts.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { DestinationsComponent} from "./components/destinations/destinations.component";
 import {Router, RouterModule} from "@angular/router";
+import { ManagerHomeComponent } from './components/manager-home/manager-home.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent, TasksComponent, GoogleMapsComponent, HomeComponent, EditTaskComponent, NavbarComponent, ChartsComponent, AdminComponent, DestinationsComponent],
+  declarations: [AppComponent, TasksComponent, GoogleMapsComponent, HomeComponent, EditTaskComponent, NavbarComponent, ChartsComponent, AdminComponent, DestinationsComponent, ManagerHomeComponent, UserManagementComponent],
   imports: [
     BrowserModule,
     CommonModule,

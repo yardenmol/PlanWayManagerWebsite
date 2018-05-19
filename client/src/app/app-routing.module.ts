@@ -4,28 +4,38 @@ import {TasksComponent} from "./components/tasks/tasks.component";
 import {HomeComponent} from "./components/home/home.component";
 import {EditTaskComponent} from "./components/edit-task/edit-task.component";
 import {AdminComponent} from "./components/admin/admin.component";
+import {ManagerHomeComponent} from "./components/manager-home/manager-home.component";
+import {UserManagementComponent} from "./components/user-management/user-management.component";
 
 // Our Array of Angular 2 Routes
 export const appRoutes: Routes = [
   {
     path: '',
-    component:HomeComponent // The Default Route
+    component:HomeComponent
+  },
+  {
+    path: 'home/:mid',
+    component:ManagerHomeComponent
+  },
+  {
+    path: 'usermanagement/:mid',
+    component:UserManagementComponent
   },
   {
     path: 'tasks/:id',
-    component: TasksComponent// The tasks Router
+    component: TasksComponent
   },
   {
     path: 'edittask',
-    component: EditTaskComponent// The edittask Router
+    component: EditTaskComponent
   },
   {
     path: 'admin',
-    component: AdminComponent// The edittask Router
+    component: AdminComponent
   },
   {
     path: '**',
-    component: HomeComponent // The "Catch-All" Route
+    component: HomeComponent
   }
 ];
 
