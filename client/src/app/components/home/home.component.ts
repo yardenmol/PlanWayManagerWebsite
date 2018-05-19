@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
       email: this.email,
       password: this.password
     }
-    this.managerService.managerLogin(newManager).subscribe(data => {
+    this.managerService.managerRegister(newManager).subscribe(data => {
       if (data["success"]) {
         console.log("success");
         this.router.navigate(['/usermanagement',data["mid"]]);
