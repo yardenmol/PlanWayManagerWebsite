@@ -3,26 +3,25 @@ import {HttpClient,HttpHeaders} from "@angular/common/http";
 import 'rxjs/add/operator/map'
 
 @Injectable()
-export class ManagerService {
+export class UsersManagementService {
 
   domain = "http://localhost:8080";
   constructor(private http:HttpClient) {
   }
 
-  managerRegister(newManager){
+  getAllUsers(mid){
     var headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
-    return this.http.post(this.domain+'/fauthentication/manager-register',newManager,{headers:headers}).
+    return this.http.post(this.domain+'/fauthentication/get-users',mid,{headers:headers}).
     map(res=>res);
   }
 
-  managerLogin(manager){
+  userRegister(newUser){
     var headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
-    return this.http.post(this.domain+'/fauthentication/manager-login',manager,{headers:headers}).
+    return this.http.post(this.domain+'/fauthentication/user-register',newUser,{headers:headers}).
     map(res=>res);
   }
-
 
 
 }
