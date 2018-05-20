@@ -21,8 +21,12 @@ export class NavbarComponent implements OnInit {
     console.log("navbar: "+this.mid);
   }
 
-  userManagement(){
+  goUserManagement(){
     this.router.navigate(['/usermanagement',this.mid]);
   }
+  goDestination(){
+    this.router.navigate(['/destinations',this.mid]);
+  }
+
 
 }

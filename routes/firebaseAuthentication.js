@@ -46,8 +46,4 @@ router.post('/manager-login', function (req,res,next) {
 })
 
 
-
-
-
-
-module.exports = {router: router}
+module.exports = {router: router};
