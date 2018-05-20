@@ -54,7 +54,21 @@ router.post('/delete-user',function (req,res,next) {
         else
             res.json({ success: false, message: error.message });
     })
+})
 
+router.post('/edit-user',function (req,res,next) {
+    firebase.database().ref('users/'+req.body.uid).update({
+        name: req.body.name,
+        email: req.body.email,
+        address: req.body.address,
+        phone: req.body.phone,
+        mid: req.body.mid
+    },error => {
+        if(error==null)
+            res.json({ success: true, message: "User deleted successfully"});
+        else
+            res.json({ success: false, message: error.message });
+    })
 })
 
 

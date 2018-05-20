@@ -12,11 +12,13 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router, private route:ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.mid = params['mid'];
+
     });
   }
 
 
   ngOnInit() {
+    console.log("navbar: "+this.mid);
   }
 
   userManagement(){

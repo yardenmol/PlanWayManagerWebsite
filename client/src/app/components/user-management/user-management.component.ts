@@ -12,6 +12,7 @@ export class UserManagementComponent implements OnInit {
   mid: string;
   users: any=[];
   newUser: any = {};
+  userToEdit: any = {};
   uidToDelete: string;
 
 
@@ -23,6 +24,7 @@ export class UserManagementComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log("blabla "+this.mid);
     this.getAllUsersOfManager()
   }
 
@@ -53,6 +55,10 @@ export class UserManagementComponent implements OnInit {
     this.newUser={};
   }
 
+  setIdToDelete(id){
+    this.uidToDelete = id;
+  }
+
   deleteUser(){
     this.usersManagementService.deleteUser({uid: this.uidToDelete}).subscribe(data=>{
       if (data["success"]) {
@@ -63,10 +69,22 @@ export class UserManagementComponent implements OnInit {
         console.log("deletion failed "+data["message"]);
       }
     });
-    console.log(this.uidToDelete);
   }
 
-  setIdToDelete(id){
-    this.uidToDelete = id;
+  setUserToEdit(user){
+    this.userToEdit = user;
+  }
+
+  editUser(){
+    console.log(this.userToEdit);
+    this.usersManagementService.editUser(this.userToEdit).subscribe(data=>{
+      if (data["success"]) {
+        console.log("edition success");
+        this.getAllUsersOfManager();
+      }
+      else{
+        console.log("edition failed "+data["message"]);
+      }
+    });
   }
 }

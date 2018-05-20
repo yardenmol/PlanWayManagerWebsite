@@ -30,4 +30,12 @@ export class UsersManagementService {
     map(res=>res);
   }
 
+  editUser(user){
+    var headers = new HttpHeaders();
+    headers.append('Content-Type','application/json');
+    return this.http.post(this.domain+'/users-management/edit-user',user,{headers:headers}).
+    map(res=>res);
+  }
+
+
 }

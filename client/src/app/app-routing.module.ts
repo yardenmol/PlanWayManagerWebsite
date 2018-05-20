@@ -6,6 +6,7 @@ import {EditTaskComponent} from "./components/edit-task/edit-task.component";
 import {AdminComponent} from "./components/admin/admin.component";
 import {ManagerHomeComponent} from "./components/manager-home/manager-home.component";
 import {UserManagementComponent} from "./components/user-management/user-management.component";
+import {NavbarComponent} from "./components/navbar/navbar.component";
 
 // Our Array of Angular 2 Routes
 export const appRoutes: Routes = [
@@ -21,6 +22,11 @@ export const appRoutes: Routes = [
     path: 'usermanagement/:mid',
     component:UserManagementComponent
   },
+  // {
+  //   path: 'navbar',
+  //   outlet: 'navbar',
+  //   component:NavbarComponent
+  // },
   {
     path: 'tasks/:id',
     component: TasksComponent
