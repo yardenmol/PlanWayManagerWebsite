@@ -71,7 +71,7 @@ router.post('/user-register', function (req,res,next) {
 router.post('/get-users',function (req,res,next) {
     var mid = req.body.mid;
 
-    firebase.database().ref("users").orderByChild('mid').equalTo(mid).on("value", function(snapshot) {
+    firebase.database().ref("users").orderByChild('mid').equalTo(mid).once("value", function(snapshot) {
         //console.log(snapshot.val());
         result=[];
         snapshot.forEach(function(data) {
@@ -85,4 +85,5 @@ router.post('/get-users',function (req,res,next) {
 
 
 
-module.exports = {router: router}
+
+module.exports = {router: router};

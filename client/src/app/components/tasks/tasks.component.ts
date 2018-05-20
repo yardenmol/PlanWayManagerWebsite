@@ -262,20 +262,20 @@ export class TasksComponent implements OnInit {
     let pieColor = D3.scale.category20c();
     let arc = D3.svg.arc<D3.layout.pie.Arc>()
       .outerRadius(outerRadius);
-    arcSelection.append("path")
-      .attr("d", arc)
-      .attr("fill", (datum, index) => {
-        return pieColor(this.pieData[index].label);
-      });
+    // arcSelection.append("path")
+    //   .attr("d", arc)
+    //   .attr("fill", (datum, index) => {
+    //     return pieColor(this.pieData[index].label);
+    //   });
 
-    arcSelection.append("text")
-      .attr("transform", (datum: any) => {
-        datum.innerRadius = 0;
-        datum.outerRadius = outerRadius;
-        return "translate(" + arc.centroid(datum) + ")";
-      })
-      .text((datum, index) => this.pieData[index].label)
-      .style("text-anchor", "middle");
+    // arcSelection.append("text")
+    //   .attr("transform", (datum: any) => {
+    //     datum.innerRadius = 0;
+    //     datum.outerRadius = outerRadius;
+    //     return "translate(" + arc.centroid(datum) + ")";
+    //   })
+    //   .text((datum, index) => this.pieData[index].label)
+    //   .style("text-anchor", "middle");
   }
 
 
