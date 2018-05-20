@@ -12,16 +12,22 @@ export class UsersManagementService {
   getAllUsers(mid){
     var headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
-    return this.http.post(this.domain+'/fauthentication/get-users',mid,{headers:headers}).
+    return this.http.post(this.domain+'/users-management/get-users',mid,{headers:headers}).
     map(res=>res);
   }
 
   userRegister(newUser){
     var headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
-    return this.http.post(this.domain+'/fauthentication/user-register',newUser,{headers:headers}).
+    return this.http.post(this.domain+'/users-management/user-register',newUser,{headers:headers}).
     map(res=>res);
   }
 
+  deleteUser(uid){
+    var headers = new HttpHeaders();
+    headers.append('Content-Type','application/json');
+    return this.http.post(this.domain+'/users-management/delete-user',uid,{headers:headers}).
+    map(res=>res);
+  }
 
 }

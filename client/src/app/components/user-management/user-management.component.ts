@@ -10,8 +10,9 @@ import {UsersManagementService} from "../../services/users-management.service";
 export class UserManagementComponent implements OnInit {
 
   mid: string;
-  users: any={};
+  users: any=[];
   newUser: any = {};
+  uidToDelete: string;
 
 
   constructor(private route:ActivatedRoute, private usersManagementService:UsersManagementService) {
@@ -22,6 +23,10 @@ export class UserManagementComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getAllUsersOfManager()
+  }
+
+  getAllUsersOfManager(){
     this.usersManagementService.getAllUsers({mid: this.mid}).
     subscribe(users=>{
       console.log(users);
@@ -34,16 +39,34 @@ export class UserManagementComponent implements OnInit {
     this.newUser.mid = this.mid;
     this.newUser.password = "Aa123456";
 
+    console.log(this.newUser);
+
     this.usersManagementService.userRegister(this.newUser).subscribe(data => {
       if (data["success"]) {
-        console.log("success");
-        //this.router.navigate(['/usermanagement',data["mid"]]);
+        console.log("registration success");
+        this.getAllUsersOfManager();
       }
       else{
-        console.log("register failed")
-        //this.message = data["message"];
+        console.log("register failed "+data["message"]);
       }
     });
     this.newUser={};
+  }
+
+  deleteUser(){
+    this.usersManagementService.deleteUser({uid: this.uidToDelete}).subscribe(data=>{
+      if (data["success"]) {
+        console.log("deletion success");
+        this.getAllUsersOfManager();
+      }
+      else{
+        console.log("deletion failed "+data["message"]);
+      }
+    });
+    console.log(this.uidToDelete);
+  }
+
+  setIdToDelete(id){
+    this.uidToDelete = id;
   }
 }
