@@ -46,7 +46,12 @@ export class HomeComponent implements OnInit {
     this.managerService.managerLogin(manager).subscribe(data => {
       if (data["success"]) {
         console.log("success");
+        //this.router.navigate(['/usermanagement(navbar:navbar)',data["mid"]]);
+        // this.router.navigateByUrl(`/usermanagement(navbar:navbar)/${data["mid"]}`);
+        // this.router.navigate([{ outlets: { navbar: [ 'navbar', data["mid"] ] }}]);
+        // this.router.navigate(['/usermanagement(navbar:navbar)'], data["mid"])
         this.router.navigate(['/usermanagement',data["mid"]]);
+
       }
       else{
         console.log("login failed")
