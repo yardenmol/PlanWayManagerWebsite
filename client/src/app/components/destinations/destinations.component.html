@@ -63,23 +63,25 @@
                             </span>
         </th>
         <th>Address</th>
+        <th>Name</th>
         <th>Actions</th>
       </tr>
       </thead>
       <tbody>
-      <!--<tr *ngFor="let add of address">-->
-        <!--<td>-->
-          <!--<span class="custom-checkbox">-->
-              <!--<input type="checkbox" id="checkbox3" name="options[]" value="1">-->
-              <!--<label for="checkbox3"></label>-->
-          <!--</span>-->
-        <!--</td>-->
-        <!--<td>{{ add.address }}</td>-->
-        <!--<td>-->
-          <!--<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>-->
-          <!--<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>-->
-        <!--</td>-->
-      <!--</tr>-->
+      <tr *ngFor="let dest of destinations">
+        <td>
+          <span class="custom-checkbox">
+              <input type="checkbox" id="checkbox3" name="options[]" value="1">
+              <label for="checkbox3"></label>
+          </span>
+        </td>
+        <td>{{ dest.address }}</td>
+        <td>{{ dest.address }}</td>
+        <td>
+          <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+          <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+        </td>
+      </tr>
       </tbody>
     </table>
 

@@ -23,6 +23,7 @@ export class DestinationsComponent implements OnInit {
   private longitude: number;
   private address: string;
   mid: string;
+  public destinations:any;
 
   constructor(private destinationService:DestinationService,private route:ActivatedRoute, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {
     this.route.params.subscribe(params => {
@@ -36,6 +37,18 @@ export class DestinationsComponent implements OnInit {
 
     //create search FormControl
     this.searchControl = new FormControl();
+   //
+    this.destinationService.getDestinations(this.mid).subscribe(data => {
+      if (data) {
+        console.log("getDestinations success");
+        this.destinations = data;
+        console.log(this.destinations);
+      }
+      else{
+        console.log("getDestinations failed");
+        this.destinations = {}
+      }
+    });
 
 
     //load Places Autocomplete
@@ -67,10 +80,10 @@ export class DestinationsComponent implements OnInit {
 
 saveAddress(){
 
-    console.log(this.address);
-    console.log(this.latitude);
-    console.log(this.longitude);
-    console.log(this.mid);
+    // console.log(this.address);
+    // console.log(this.latitude);
+    // console.log(this.longitude);
+    // console.log(this.mid);
    this.destinationService.addAddress({mid:this.mid,address:this.address,latitude:this.latitude, longitude: this.longitude }).subscribe(data => {
      if (data["success"]) {
        console.log("success");

@@ -16,4 +16,12 @@ export class DestinationService {
     map(res=>res);
 
   }
+
+  getDestinations(mid){
+    var headers = new HttpHeaders();
+    headers.append('Content-Type','application/json');
+    return this.http.post(this.domain+'/destinations/get-destinations',{mid:mid},{headers:headers}).
+    map(res=>res);
+
+  }
 }
