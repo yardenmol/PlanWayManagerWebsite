@@ -1,0 +1,24 @@
+<app-navbar></app-navbar>
+<div id="loading" class="modal fade">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <<div class="loader"></div>
+
+</div>
+
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <ng2-dual-list-box [data]="addrList" valueField="id" textField="name" availableText = "Available Address" selectedText = "Selected Address"
+                       [(ngModel)]="selected"
+                       (onAvailableItemSelected)="print()"
+                       (onSelectedItemsSelected)="print()"
+                       (onItemsMoved)="print()">
+
+    </ng2-dual-list-box>
+
+  </div>
+</div>
+<!--<button name="plan btn" type="button" class="btn btn-primary" (click)="sendAddress()">Plan a Way!</button>-->
+<div>
+<a href="#loading" class="btn btn-primary" data-toggle="modal" (click)="sendAddress()"> <span>Plan a Way!</span></a>
+</div>

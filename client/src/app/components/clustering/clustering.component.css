@@ -1,0 +1,40 @@
+button.btn.btn-primary {
+  margin-top: 20px;
+  margin-left: 80%;
+}
+
+a.btn.btn-primary {
+  margin-left: 80%;
+  margin-top: 20px;
+}
+
+h4.text-center   {
+  border-radius: 3px 3px 0 0;
+  padding: 16px 30px;
+  background: #435d7d;
+  color: #fff;
+  /*font-family: 'Varela Round', sans-serif;*/
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  margin-top: 20%;
+  margin-left: 45%;
+}
+
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

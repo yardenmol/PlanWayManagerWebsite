@@ -15,6 +15,7 @@ import { NvD3Module } from 'ng2-nvd3';
 import  {Ng2SearchPipeModule} from "ng2-search-filter";
 import {appRoutes} from "./app-routing.module";
 
+
 import 'nvd3';
 import { ChartsComponent } from './components/charts/charts.component';
 import { AdminComponent } from './components/admin/admin.component';
@@ -22,13 +23,15 @@ import { DestinationsComponent} from "./components/destinations/destinations.com
 import {Router, RouterModule} from "@angular/router";
 import { ManagerHomeComponent } from './components/manager-home/manager-home.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
+import { ClusteringComponent } from './components/clustering/clustering.component';
 
-
+import { DualListBoxModule } from 'ng2-dual-list-box'
 
 @NgModule({
-  declarations: [AppComponent, TasksComponent, GoogleMapsComponent, HomeComponent, EditTaskComponent, NavbarComponent, ChartsComponent, AdminComponent, DestinationsComponent, ManagerHomeComponent, UserManagementComponent],
+  declarations: [AppComponent, TasksComponent, GoogleMapsComponent, HomeComponent, EditTaskComponent, NavbarComponent, ChartsComponent, AdminComponent, DestinationsComponent, ManagerHomeComponent, UserManagementComponent, ClusteringComponent],
   imports: [
     BrowserModule,
+    DualListBoxModule,
     CommonModule,
     HttpClientModule,
     FormsModule,
