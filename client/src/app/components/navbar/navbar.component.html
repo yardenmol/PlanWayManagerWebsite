@@ -16,10 +16,9 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav" routerLinkActive="active">
-        <li class="nav-item"><a class="nav-link" [routerLink] = "['/admin']" >Home</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="goDestination()" >Destinations</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="goUserManagement()" >Users Management</a></li>
-
+        <li class="nav-item"><a class="nav-link" [routerLink] = "['/manager-home',this.mid]">Home</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink] = "['/user-management',this.mid]" >Users Management</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink] = "['/destinations',this.mid]">Destinations</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">LogOut</a></li>

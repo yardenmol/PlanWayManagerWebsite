@@ -16,11 +16,11 @@ export const appRoutes: Routes = [
     component:HomeComponent
   },
   {
-    path: 'home/:mid',
+    path: 'manager-home/:mid',
     component:ManagerHomeComponent
   },
   {
-    path: 'usermanagement/:mid',
+    path: 'user-management/:mid',
     component:UserManagementComponent
   },
   // {

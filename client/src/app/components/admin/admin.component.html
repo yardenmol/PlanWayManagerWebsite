@@ -52,10 +52,10 @@
           {{user.name}}
           <input type="button" (click)="editUser(user._id)" value="Edit" class="btn btn-default">
         </legend>
-        <div *ngFor="let task of user.tasks">
+        <div *ngFor="let dest of user.destination">
           <div>
-            <input type="checkbox" [checked]="task.isDone" (click)="updateStatus(user.name,task)">
-            <label>{{task.name}}</label>
+            <!--<input type="checkbox" [checked]="task.isDone" (click)="updateStatus(user.name,task)">-->
+            <label>{{dest.name}}</label>
           </div>
         </div>
       </fieldset>

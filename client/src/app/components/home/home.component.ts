@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
     this.managerService.managerRegister(newManager).subscribe(data => {
       if (data["success"]) {
         console.log("success");
-        this.router.navigate(['/usermanagement',data["mid"]]);
+        this.router.navigate(['/user-management',data["mid"]]);
       }
       else{
         console.log("register failed")
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
         // this.router.navigateByUrl(`/usermanagement(navbar:navbar)/${data["mid"]}`);
         // this.router.navigate([{ outlets: { navbar: [ 'navbar', data["mid"] ] }}]);
         // this.router.navigate(['/usermanagement(navbar:navbar)'], data["mid"])
-        this.router.navigate(['/usermanagement',data["mid"]]);
+        this.router.navigate(['/user-management',data["mid"]]);
 
       }
       else{

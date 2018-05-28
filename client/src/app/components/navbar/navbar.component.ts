@@ -18,15 +18,6 @@ export class NavbarComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log("navbar: "+this.mid);
   }
 
-  goUserManagement(){
-    this.router.navigate(['/usermanagement',this.mid]);
   }
-  goDestination(){
-    this.router.navigate(['/destinations',this.mid]);
-  }
-
-
-}
