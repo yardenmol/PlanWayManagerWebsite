@@ -48,7 +48,7 @@
         </div>
         <div class="col-sm-6">
           <a href="#addAddress" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Address</span></a>
-          <a href="#deleteAddress" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
+
         </div>
       </div>
     </div>
@@ -61,8 +61,8 @@
               <label for="selectAll"></label>
           </span>
         </th>
-        <th>Address</th>
         <th>Name</th>
+        <th>Address</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -74,11 +74,12 @@
               <label for="checkbox3"></label>
           </span>
         </td>
-        <td>{{ dest.address }}</td>
         <td>{{ dest.name }}</td>
+        <td>{{ dest.address }}</td>
         <td>
-          <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-          <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+          <a href="#editAddress" class="edit" (click)="setUserToEdit(dest)" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+          <a href="#deleteAddress" (click)="setIdToDelete(dest.uid)" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+
         </td>
       </tr>
       </tbody>
@@ -96,15 +97,15 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
-
-          <div class="form-group">
-            <label>Address</label>
-            <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl" >
-          </div>
           <div class="form-group">
             <label>Name</label>
             <input type="text" name="name" class="form-control" [(ngModel)]="name" required>
           </div>
+          <div class="form-group">
+            <label>Address</label>
+            <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl" >
+          </div>
+
         </div>
         <div class="modal-footer">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -115,7 +116,7 @@
   </div>
 </div>
 <!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade">
+<div id="editAddress" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
       <form>
@@ -125,14 +126,14 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label>Address</label>
-            <textarea class="form-control" required></textarea>
+            <label>Name</label>
+            <input name="name" type="text" class="form-control" [(ngModel)]="addressToEdit.name" required>
           </div>
 
         </div>
         <div class="modal-footer">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-info" value="Save">
+          <input type="submit" class="btn btn-info" data-dismiss="modal" (click)="editAddress()" value="Save">
         </div>
       </form>
     </div>
@@ -144,7 +145,7 @@
     <div class="modal-content">
       <form>
         <div class="modal-header">
-          <h4 class="modal-title">Delete Employee</h4>
+          <h4 class="modal-title">Delete Address</h4>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
@@ -153,7 +154,7 @@
         </div>
         <div class="modal-footer">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-danger" value="Delete">
+          <input type="submit" class="btn btn-danger" value="Delete" data-dismiss="modal"(click)="deleteDestination()">
         </div>
       </form>
     </div>

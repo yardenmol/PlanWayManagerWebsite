@@ -25,6 +25,8 @@ export class DestinationsComponent implements OnInit {
   private name: string;
   mid: string;
   public destinations:any;
+  public uidToDelete: string;
+  public addressToEdit:any= {};
 
   constructor(private destinationService:DestinationService,private route:ActivatedRoute, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {
     this.route.params.subscribe(params => {
@@ -102,6 +104,41 @@ saveAddress(){
 
 }
 
+  editAddress(){
+    // console.log(this.userToEdit);
+    this.destinationService.editDestination(this.addressToEdit).subscribe(data=>{
+      if (data["success"]) {
+        console.log("edition success");
+        this.getDestinations();
+      }
+      else{
+        console.log("edition failed "+data["message"]);
+      }
+    });
+  }
+
+
+  setIdToDelete(id){
+    this.uidToDelete = id;
+  }
+
+  deleteDestination(){
+
+    this.destinationService.deleteDestination({uid:this.uidToDelete}).subscribe(data=>{
+      if (data["success"]) {
+        console.log("delete success");
+        this.getDestinations();
+      }
+      else{
+        console.log("deletion failed "+data["message"]);
+      }
+    });
+  }
+
+setUserToEdit(address){
+    this.addressToEdit = address;
+
+}
 
 
 

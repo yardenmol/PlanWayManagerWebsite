@@ -18,8 +18,11 @@ router.post('/get-destinations',function (req,res,next) {
         // console.log(snapshot.val());
         result=[];
         snapshot.forEach(function(data) {
-            result.push(data.val());
-            //console.log(data.key);
+            let temp_j = data.val();
+            temp_j.uid = data.key;
+            result.push(temp_j);
+            // console.log(temp_j);
+            // console.log(data.key);
         });
         // console.log(result);
         res.json(result);
@@ -27,6 +30,26 @@ router.post('/get-destinations',function (req,res,next) {
 })
 
 
+router.post('/delete-destination',function (req,res,next) {
+    var uid = req.body.uid;
+    firebase.database().ref('destinations/'+uid).remove(error => {
+        if(error==null)
+            res.json({ success: true, message: "destination deleted successfully"});
+        else
+            res.json({ success: false, message: error.message });
+    })
+})
 
+
+router.post('/edit-destinations',function (req,res,next) {
+    firebase.database().ref('destinations/'+req.body.uid).update({
+        name: req.body.name,
+    },error => {
+        if(error==null)
+            res.json({ success: true, message: "destinations deleted successfully"});
+        else
+            res.json({ success: false, message: error.message });
+    })
+})
 
 module.exports = {router: router};
