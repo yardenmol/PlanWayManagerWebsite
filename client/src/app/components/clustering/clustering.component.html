@@ -1,13 +1,68 @@
 <app-navbar></app-navbar>
-<div id="loading" class="modal fade">
+<div *ngIf="showResult" id="loading" class="modal fade" >
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <div class="loader" data-dismiss="modal"></div>
+</div>
 
-  <div class="loader"></div>
+<!--<div *ngIf="!showResult">-->
+    <!--<div class="modal-dialog">-->
+      <!--<div class="modal-content">-->
+        <!--<form>-->
+         <!--<p>{{result}}</p>-->
+          <!--<div class="modal-body">-->
+          <!--</div>-->
+          <!--<div class="modal-footer">-->
+            <!--<input type="button" class="btn btn-default" data-dismiss="modal"  value="Cancel">-->
+            <!--<input type="submit" class="btn btn-info" data-dismiss="modal" value="Save">-->
+          <!--</div>-->
+        <!--</form>-->
+      <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+
+      <div *ngIf="showResult">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <div class="loader" data-dismiss="modal"></div>
+      </div>
+      <div *ngIf="!showResult">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <div *ngFor="let tr of tracks">
+                <p>{{tr.driver.name}}</p>
+              <div *ngFor="let dest of tr.destinations">
+                <p>{{dest}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-info" data-dismiss="modal" value="OK">
+          </div>
+        </div>
+
+          </div>
+
+      </div>
 
 </div>
 
 
+
+
 <div class="row">
+  <h1 class="title">Destinations</h1>
   <div class="col-md-8 col-md-offset-2">
     <ng2-dual-list-box [data]="addrList" valueField="id" textField="name" availableText = "Available Address" selectedText = "Selected Address"
                        [(ngModel)]="selected"
@@ -19,7 +74,20 @@
 
   </div>
 </div>
+<div class="row">
+  <h1 class="title">Drivers</h1>
+  <div class="col-md-8 col-md-offset-2">
+    <ng2-dual-list-box [data]="deiverList" valueField="id" textField="name" availableText = "Available Users" selectedText = "Selected Users"
+                       [(ngModel)]="selectedDriver"
+                       (onAvailableItemSelected)="print()"
+                       (onSelectedItemsSelected)="print()"
+                       (onItemsMoved)="print()">
+
+    </ng2-dual-list-box>
+
+  </div>
+</div>
 <!--<button name="plan btn" type="button" class="btn btn-primary" (click)="sendAddress()">Plan a Way!</button>-->
 <div>
-<a href="#loading" class="btn btn-primary" data-toggle="modal" (click)="sendAddress()"> <span>Plan a Way!</span></a>
+<a data-target="#myModal" class="btn btn-primary" data-toggle="modal" (click)="sendAddress()"> <span>Plan a Way!</span></a>
 </div>
