@@ -20,18 +20,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  }
-<<<<<<< HEAD
-=======
-  goDestination(){
-    this.router.navigate(['/destinations',this.mid]);
-  }
-
-
   goClustering(){
     this.router.navigate(['/clustering',this.mid]);
   }
 
-
 }
->>>>>>> a193bbc3a1abcfe39b4fc942678a9146627fed86
