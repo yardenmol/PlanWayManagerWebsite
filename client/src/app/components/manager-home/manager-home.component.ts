@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ManagerService} from "../../services/manager.service";
-
 //d3
 import {ElementRef, ViewChild, Input} from "@angular/core";
 import * as D3 from "d3-3";
 import {IData} from "../../data.interface";
+//socket-io
+import {Observable} from "rxjs/Observable";
+import * as io from "socket.io-client";
 
 @Component({
   selector: 'app-manager-home',
@@ -16,6 +18,7 @@ export class ManagerHomeComponent implements OnInit {
 
   public tasks;
   mid: string;
+  locations= [];
 
   //google-maps
   latitude: number;
@@ -30,7 +33,11 @@ export class ManagerHomeComponent implements OnInit {
   private height: number;
   private radius: number;
   private htmlElement: HTMLElement;
-  private pieData: IData[];
+  // private pieData: IData[];
+  private pieData: any;
+
+  //socket-io
+  socket: SocketIOClient.Socket;
 
   constructor(private route:ActivatedRoute, private managerService: ManagerService,) {
     this.route.params.subscribe(params => {
@@ -41,37 +48,75 @@ export class ManagerHomeComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.mid);
-    // this.managerService.addTaskToUser().subscribe();
-    this.managerService.getTasksOfManager({mid: this.mid}).
-    subscribe(tasks=>{
-      console.log(tasks);
-      this.tasks = tasks;
-    });
+    //this.managerService.addTaskToUser().subscribe();
 
+    // this.managerService.getTasksOfManager({mid: this.mid}).subscribe(tasks=>{
+    //   console.log(tasks);
+    //   this.tasks = tasks;
+    //
+    //   var sumLat = 0;
+    //   var sumLng = 0;
+    //   for(var i =0;i<this.tasks.length;i++){
+    //     sumLat += this.tasks[i].latitude;
+    //     sumLng += this.tasks[i].longitude;
+    //   }
+    //   this.latitude = sumLat / this.tasks.length;
+    //   this.longitude = sumLng / this.tasks.length;
+    //
+    //   console.log(this.longitude);
+    //   console.log(this.latitude);
+    // });
 
     //google-maps
-    this.zoom = 11;
+    this.zoom = 10;
+
     this.latitude = 32.0301334;
     this.longitude = 34.9501432;
 
     //pie-chart
     this.htmlElement = this.element.nativeElement;
     this.host = D3.select(this.htmlElement);
-    this.getPieData();
-  }
 
-
-  //pie-chart
-  getPieData(){
-    this.managerService.getPieData(this.mid).
-    subscribe((data:any)=>{
+    //socket-io(pieData)
+    this.initSocketIoPieData().subscribe(data=>{
       this.pieData = data;
       this.setup();
       this.buildSVG();
       this.buildPie();
+    });
+
+    //socket-io(tasks-of-manager)
+    this.initSocketIoTasksOfManager().subscribe(tasks=>{
+      console.log(tasks);
+      console.log("inside initTasksOfManager");
+      this.tasks = tasks;
+      //this.locations = [];
+      var sumLat = 0;
+      var sumLng = 0;
+      for(var i =0;i<this.tasks.length;i++){
+        this.locations.push({lat: this.tasks[i].latitude,
+                             lng: this.tasks[i].longitude,
+                             name: this.tasks[i].name,
+                             uid: this.tasks[i].uid})
+        sumLat += this.tasks[i].latitude;
+        sumLng += this.tasks[i].longitude;
+      }
+      this.latitude = sumLat / this.tasks.length;
+      this.longitude = sumLng / this.tasks.length;
+
+      console.log(this.longitude);
+      console.log(this.latitude);
     })
+
   }
 
+  editUser(mid){
+    console.log("after edit");
+    this.managerService.updateTask().subscribe();
+  }
+
+
+  //pie-chart
   private setup(): void {
     this.width = 250;
     this.height = 250;
@@ -119,5 +164,32 @@ export class ManagerHomeComponent implements OnInit {
       .text((datum, index) => this.pieData[index].label)
       .style("text-anchor", "middle");
   }
+
+  //socket-io(pieData)
+  initSocketIoPieData(){
+    let observable = new Observable(observer => {
+      this.socket = io.connect('http://localhost:8080');
+
+      this.socket.emit('getPieData',{mid: this.mid});
+      this.socket.on('pieDataResult', (data) => {
+        observer.next(data);
+      });
+    });
+    return observable;
+  }
+
+  initSocketIoTasksOfManager(){
+    let observable = new Observable(observer => {
+      this.socket = io.connect('http://localhost:8080');
+
+      this.socket.emit('getTasksOfManager',{mid: this.mid});
+      this.socket.on('TasksOfManagerResult', (data) => {
+        observer.next(data);
+      });
+    });
+    return observable;
+  }
+
+
 
 }

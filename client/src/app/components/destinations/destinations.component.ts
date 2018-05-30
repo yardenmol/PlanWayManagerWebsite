@@ -14,7 +14,6 @@ export class DestinationsComponent implements OnInit {
 
   @Output() notifyLocation: EventEmitter<any> = new EventEmitter<any>();
 
-
   @ViewChild("search")
   public searchElementRef: ElementRef;
 

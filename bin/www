@@ -94,8 +94,6 @@ function onListening() {
 
 var io = require('socket.io').listen(server);
 
-var tasks = require('../routes/tasksOld');
-var usersManagement = require('../routes/usersManagement');
+var tasks = require('../routes/tasks');
 
 tasks.setIo(io);
-usersManagement.setIo(io);

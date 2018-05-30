@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
     this.managerService.managerRegister(newManager).subscribe(data => {
       if (data["success"]) {
         console.log("success");
-        this.router.navigate(['/user-management',data["mid"]]);
+        this.router.navigate(['/manager-home',data["mid"]]);
       }
       else{
         console.log("register failed")
@@ -46,11 +46,7 @@ export class HomeComponent implements OnInit {
     this.managerService.managerLogin(manager).subscribe(data => {
       if (data["success"]) {
         console.log("success");
-        //this.router.navigate(['/usermanagement(navbar:navbar)',data["mid"]]);
-        // this.router.navigateByUrl(`/usermanagement(navbar:navbar)/${data["mid"]}`);
-        // this.router.navigate([{ outlets: { navbar: [ 'navbar', data["mid"] ] }}]);
-        // this.router.navigate(['/usermanagement(navbar:navbar)'], data["mid"])
-        this.router.navigate(['/user-management',data["mid"]]);
+        this.router.navigate(['/manager-home',data["mid"]]);
 
       }
       else{
@@ -59,24 +55,5 @@ export class HomeComponent implements OnInit {
       }
 
     });
-  }
-
-  admin(event) {
-    //   event.preventDefault();
-    //   var newAdmin = {
-    //     name: this.name,
-    //     password: this.password
-    //   }
-    //   this.userService.admin(newAdmin).
-    //   subscribe(data=>{
-    //     if (data["success"]){
-    //       this.router.navigate(['/admin']);
-    //     }
-    //     else
-    //       this.message=data["message"];
-    //   });
-    // }
-
-
   }
 }

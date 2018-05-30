@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, EventEmitter, NgZone, OnInit, Output, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {UsersManagementService} from "../../services/users-management.service";
+import {FormControl} from "@angular/forms";
+import {MapsAPILoader} from "@agm/core";
 
 @Component({
   selector: 'app-user-management',
@@ -15,8 +17,18 @@ export class UserManagementComponent implements OnInit {
   userToEdit: any = {};
   uidToDelete: string;
 
+  //New User - address from googlemaps auto-complete
+  @Output() notifyLocation: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private route:ActivatedRoute, private usersManagementService:UsersManagementService) {
+  @ViewChild("search")
+  public searchElementRef: ElementRef;
+
+  public searchControl: FormControl;
+  private latitude: number;
+  private longitude: number;
+  private address: string;
+
+  constructor(private route:ActivatedRoute, private usersManagementService:UsersManagementService, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {
     this.route.params.subscribe(params => {
       this.mid = params['mid'];
     });
@@ -24,8 +36,35 @@ export class UserManagementComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log("blabla "+this.mid);
     this.getAllUsersOfManager()
+
+    //create search FormControl
+    this.searchControl = new FormControl();
+
+
+    //load Places Autocomplete
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {});
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          console.log(autocomplete.getPlace());
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+
+            return;
+          }
+
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
+          this.address =place.formatted_address
+          // this.notifyLocation.emit({lat: this.latitude, lng:this.longitude, address: place.formatted_address});
+
+        });
+      });
+    });
+
   }
 
   getAllUsersOfManager(){
@@ -40,8 +79,9 @@ export class UserManagementComponent implements OnInit {
     console.log(this.newUser);
     this.newUser.mid = this.mid;
     this.newUser.password = "Aa123456";
-
-    console.log(this.newUser);
+    this.newUser.address = this.address;
+    this.newUser.latitude = this.latitude;
+    this.newUser.longitude = this.longitude;
 
     this.usersManagementService.userRegister(this.newUser).subscribe(data => {
       if (data["success"]) {
@@ -49,7 +89,7 @@ export class UserManagementComponent implements OnInit {
         this.getAllUsersOfManager();
       }
       else{
-        console.log("register failed "+data["message"]);
+       console.log("register failed "+data["message"]);
       }
     });
     this.newUser={};
@@ -69,14 +109,21 @@ export class UserManagementComponent implements OnInit {
         console.log("deletion failed "+data["message"]);
       }
     });
+    this.uidToDelete = "";
   }
 
   setUserToEdit(user){
     this.userToEdit = user;
+    this.address = user.address;
+    this.latitude = user.latitude;
+    this.longitude = user.longitude;
   }
 
   editUser(){
     console.log(this.userToEdit);
+    this.userToEdit.address = this.address;
+    this.userToEdit.latitude = this.latitude;
+    this.userToEdit.longitude = this.longitude;
     this.usersManagementService.editUser(this.userToEdit).subscribe(data=>{
       if (data["success"]) {
         console.log("edition success");
@@ -86,5 +133,9 @@ export class UserManagementComponent implements OnInit {
         console.log("edition failed "+data["message"]);
       }
     });
+  }
+
+  clearUserToEdit(){
+    this.userToEdit = {};
   }
 }

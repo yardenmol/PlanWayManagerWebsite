@@ -28,6 +28,11 @@ export class ManagerService {
     map(res=>res);
   }
 
+  updateTask(){
+    return this.http.get(this.domain + '/tasks/update-task').
+    map(res=>res);
+  }
+
   getTasksOfManager(mid){
     var headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
