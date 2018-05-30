@@ -29,4 +29,9 @@ export class NavbarComponent implements OnInit {
   }
 
 
+  goClustering(){
+    this.router.navigate(['/clustering',this.mid]);
+  }
+
+
 }

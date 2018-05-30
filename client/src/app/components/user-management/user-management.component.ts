@@ -76,7 +76,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   editUser(){
-    console.log(this.userToEdit);
+    // console.log(this.userToEdit);
     this.usersManagementService.editUser(this.userToEdit).subscribe(data=>{
       if (data["success"]) {
         console.log("edition success");

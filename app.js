@@ -9,6 +9,7 @@ var admin = require('./routes/admin');
 var firebase_auth = require('./routes/firebaseAuthentication');
 var users_management = require('./routes/usersManagement');
 var destinations_management= require('./routes/destinations');
+var clustering_management = require('./routes/clustering');
 var cors = require('cors');
 var app = express();
 const firebase = require('firebase');
@@ -43,5 +44,5 @@ app.use('/admin',admin.router);
 app.use('/fauthentication', firebase_auth.router);
 app.use('/users-management', users_management.router);
 app.use('/destinations' , destinations_management.router);
-
+app.use('/clustering' , clustering_management.router);
 module.exports = app;

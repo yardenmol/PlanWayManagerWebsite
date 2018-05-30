@@ -22,7 +22,11 @@ export class DestinationsComponent implements OnInit {
   private latitude: number;
   private longitude: number;
   private address: string;
+  private name: string;
   mid: string;
+  public destinations:any;
+  public uidToDelete: string;
+  public addressToEdit:any= {};
 
   constructor(private destinationService:DestinationService,private route:ActivatedRoute, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {
     this.route.params.subscribe(params => {
@@ -36,7 +40,9 @@ export class DestinationsComponent implements OnInit {
 
     //create search FormControl
     this.searchControl = new FormControl();
+   //
 
+    this.getDestinations();
 
     //load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
@@ -64,17 +70,30 @@ export class DestinationsComponent implements OnInit {
 
   }
 
-
+  getDestinations (){
+  this.destinationService.getDestinations(this.mid).subscribe(data => {
+    if (data) {
+      console.log("getDestinations success");
+      this.destinations = data;
+      // console.log(this.destinations);
+    }
+    else{
+      console.log("getDestinations failed");
+      this.destinations = {}
+    }
+  });
+}
 saveAddress(){
 
-    console.log(this.address);
-    console.log(this.latitude);
-    console.log(this.longitude);
-    console.log(this.mid);
-   this.destinationService.addAddress({mid:this.mid,address:this.address,latitude:this.latitude, longitude: this.longitude }).subscribe(data => {
+    // console.log(this.address);
+    // console.log(this.latitude);
+    // console.log(this.longitude);
+    // console.log(this.mid);
+   this.destinationService.addAddress({mid:this.mid,address:this.address,latitude:this.latitude, longitude: this.longitude,name:this.name }).subscribe(data => {
      if (data["success"]) {
        console.log("success");
        //this.router.navigate(['/usermanagement',data["mid"]]);
+       this.getDestinations();
      }
      else{
        console.log("register failed")
@@ -85,6 +104,41 @@ saveAddress(){
 
 }
 
+  editAddress(){
+    // console.log(this.userToEdit);
+    this.destinationService.editDestination(this.addressToEdit).subscribe(data=>{
+      if (data["success"]) {
+        console.log("edition success");
+        this.getDestinations();
+      }
+      else{
+        console.log("edition failed "+data["message"]);
+      }
+    });
+  }
+
+
+  setIdToDelete(id){
+    this.uidToDelete = id;
+  }
+
+  deleteDestination(){
+
+    this.destinationService.deleteDestination({uid:this.uidToDelete}).subscribe(data=>{
+      if (data["success"]) {
+        console.log("delete success");
+        this.getDestinations();
+      }
+      else{
+        console.log("deletion failed "+data["message"]);
+      }
+    });
+  }
+
+setUserToEdit(address){
+    this.addressToEdit = address;
+
+}
 
 
 
