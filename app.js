@@ -11,10 +11,11 @@ var firebase_auth = require('./routes/firebaseAuthentication');
 var users_management = require('./routes/usersManagement');
 var destinations_management= require('./routes/destinations');
 var tasks = require('./routes/tasks');
-
+var clustering_management = require('./routes/clustering');
 var cors = require('cors');
 var app = express();
 const firebase = require('firebase');
+
 // Initialize Firebase
 const config = {
     apiKey: "AIzaSyA5_1kW95h7CKlB0NmJUQndZBeVV9s5RVc",
@@ -49,5 +50,5 @@ app.use('/fauthentication', firebase_auth.router);
 app.use('/users-management', users_management.router);
 app.use('/destinations' , destinations_management.router);
 app.use('/tasks' , tasks.router);
-
+app.use('/clustering' , clustering_management.router);
 module.exports = app;

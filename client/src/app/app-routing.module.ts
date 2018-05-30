@@ -8,6 +8,7 @@ import {ManagerHomeComponent} from "./components/manager-home/manager-home.compo
 import {UserManagementComponent} from "./components/user-management/user-management.component";
 import {DestinationsComponent} from "./components/destinations/destinations.component";
 import {NavbarComponent} from "./components/navbar/navbar.component";
+import {ClusteringComponent} from "./components/clustering/clustering.component";
 
 // Our Array of Angular 2 Routes
 export const appRoutes: Routes = [
@@ -35,6 +36,10 @@ export const appRoutes: Routes = [
   {
     path: 'tasks/:id',
     component: TasksComponent
+  },
+  {
+    path: 'clustering/:mid',
+    component: ClusteringComponent
   },
   {
     path: 'edittask',

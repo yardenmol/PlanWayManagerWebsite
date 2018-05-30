@@ -19,7 +19,9 @@
         <li class="nav-item"><a class="nav-link" [routerLink] = "['/manager-home',this.mid]">Home</a></li>
         <li class="nav-item"><a class="nav-link" [routerLink] = "['/user-management',this.mid]" >Users Management</a></li>
         <li class="nav-item"><a class="nav-link" [routerLink] = "['/destinations',this.mid]">Destinations</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="goClustering()" >Clustering</a></li>
       </ul>
+    
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">LogOut</a></li>
       </ul>
