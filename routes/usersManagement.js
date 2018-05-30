@@ -20,7 +20,9 @@ router.post('/user-register', function (req,res,next) {
                     email: req.body.email,
                     address: req.body.address,
                     phone: req.body.phone,
-                    mid: req.body.mid
+                    mid: req.body.mid,
+                    latitude: req.body.latitude,
+                    longitude: req.body.longitude
                 });
                 console.log("User created successfully");
 
@@ -61,26 +63,17 @@ router.post('/edit-user',function (req,res,next) {
         email: req.body.email,
         address: req.body.address,
         phone: req.body.phone,
-        mid: req.body.mid
+        mid: req.body.mid,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude
     },error => {
         if(error==null)
-            res.json({ success: true, message: "User deleted successfully"});
+            res.json({ success: true, message: "User edited successfully"});
         else
             res.json({ success: false, message: error.message });
     })
 })
 
 
-
-
-
-
-
-function setIo(ioObject) {
-    io = ioObject;
-
-}
-
-module.exports = {router: router,
-                  setIo: setIo}
+module.exports = {router: router}
 

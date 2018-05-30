@@ -23,6 +23,27 @@ export class ManagerService {
     map(res=>res);
   }
 
+  addTaskToUser(){
+    return this.http.get(this.domain + '/tasks/add-task').
+    map(res=>res);
+  }
 
+  updateTask(){
+    return this.http.get(this.domain + '/tasks/update-task').
+    map(res=>res);
+  }
 
+  getTasksOfManager(mid){
+    var headers = new HttpHeaders();
+    headers.append('Content-Type','application/json');
+    return this.http.post(this.domain+'/tasks/tasks-of-manager',mid,{headers:headers}).
+    map(res=>res);
+  }
+
+  getPieData(mid){
+    var headers = new HttpHeaders();
+    headers.append('Content-Type','application/json');
+    return this.http.post(this.domain+'/tasks/manager-pie-data',mid,{headers:headers}).
+    map(res=>res);
+  }
 }

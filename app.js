@@ -3,16 +3,19 @@ var path = require('path');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var tasks = require('./routes/tasks');
+var old_tasks = require('./routes/tasksOld');
 var authentication = require('./routes/authentication');
 var admin = require('./routes/admin');
+//new
 var firebase_auth = require('./routes/firebaseAuthentication');
 var users_management = require('./routes/usersManagement');
 var destinations_management= require('./routes/destinations');
+var tasks = require('./routes/tasks');
 var clustering_management = require('./routes/clustering');
 var cors = require('cors');
 var app = express();
 const firebase = require('firebase');
+
 // Initialize Firebase
 const config = {
     apiKey: "AIzaSyA5_1kW95h7CKlB0NmJUQndZBeVV9s5RVc",
@@ -38,11 +41,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.use('/', index);
-app.use('/api',tasks.router);
+app.use('/api',old_tasks.router);
 app.use('/authentication', authentication);
 app.use('/admin',admin.router);
+
+
 app.use('/fauthentication', firebase_auth.router);
 app.use('/users-management', users_management.router);
 app.use('/destinations' , destinations_management.router);
+app.use('/tasks' , tasks.router);
 app.use('/clustering' , clustering_management.router);
 module.exports = app;
