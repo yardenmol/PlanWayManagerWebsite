@@ -10,6 +10,7 @@ export class UsersManagementService {
   }
 
   getAllUsers(mid){
+    console.log("Service " + JSON.stringify(mid));
     var headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
     return this.http.post(this.domain+'/users-management/get-users',mid,{headers:headers}).

@@ -120,10 +120,14 @@ export class UserManagementComponent implements OnInit {
   }
 
   editUser(){
+<<<<<<< HEAD
     console.log(this.userToEdit);
     this.userToEdit.address = this.address;
     this.userToEdit.latitude = this.latitude;
     this.userToEdit.longitude = this.longitude;
+=======
+    // console.log(this.userToEdit);
+>>>>>>> a193bbc3a1abcfe39b4fc942678a9146627fed86
     this.usersManagementService.editUser(this.userToEdit).subscribe(data=>{
       if (data["success"]) {
         console.log("edition success");
