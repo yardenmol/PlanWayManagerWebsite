@@ -18,7 +18,7 @@ router.get('/update-task', function (req,res,next) {
     firebase.database().ref('tasks/'+'-LDbcmrRdunIKqO9IfgN').update({
         date: "2018-5-28",
         destinations: [{did: "-LCxfdU6nxx9WvKKKoLN", isDone: true},
-                        {did: "-LCxgGbGE_S3eQHN3C6i", isDone: true}],
+                        {did: "-LCxgGbGE_S3eQHN3C6i", isDone: false}],
         mid: "JjBj9heumraFABJ2rtgg9I1qELu2",
         uid: "j21l3zi74dWSSeDrAPWnfBCPGGy1",
     },error => {

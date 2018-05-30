@@ -20,7 +20,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  }
   goClustering(){
     this.router.navigate(['/clustering',this.mid]);
   }
