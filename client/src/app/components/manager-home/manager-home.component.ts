@@ -18,7 +18,9 @@ export class ManagerHomeComponent implements OnInit {
 
   public tasks;
   mid: string;
-  locations= [];
+  locations:any = [];
+
+  startUpdateLocations:boolean = true;
 
   //google-maps
   latitude: number;
@@ -88,32 +90,50 @@ export class ManagerHomeComponent implements OnInit {
     //socket-io(tasks-of-manager)
     this.initSocketIoTasksOfManager().subscribe(tasks=>{
       console.log(tasks);
-      console.log("inside initTasksOfManager");
       this.tasks = tasks;
-      //this.locations = [];
       var sumLat = 0;
       var sumLng = 0;
-      for(var i =0;i<this.tasks.length;i++){
+      for(var i = 0;i < this.tasks.length; i++){
         this.locations.push({lat: this.tasks[i].latitude,
                              lng: this.tasks[i].longitude,
                              name: this.tasks[i].name,
-                             uid: this.tasks[i].uid})
+                             uid: this.tasks[i].uid});
         sumLat += this.tasks[i].latitude;
         sumLng += this.tasks[i].longitude;
       }
+      console.log("before check " + this.startUpdateLocations);
+      if(this.startUpdateLocations){
+        console.log("inside if");
+        this.intervalOfUpdateUsersLocations();
+        this.startUpdateLocations = false;
+      }
       this.latitude = sumLat / this.tasks.length;
       this.longitude = sumLng / this.tasks.length;
-
-      console.log(this.longitude);
-      console.log(this.latitude);
     })
 
   }
 
+  //test
   editUser(mid){
     console.log("after edit");
     this.managerService.updateTask().subscribe();
   }
+
+  //update locations
+  updateUsersLocations(){
+    console.log("checking locations....");
+    this.managerService.getUsersLocations({users:this.locations}).subscribe(locations=>{
+      console.log(locations);
+      this.locations = locations;
+    });
+  }
+
+  intervalOfUpdateUsersLocations(){
+    console.log("blabla");
+    setInterval(()=>{this.updateUsersLocations()}, 60*1000);
+  }
+
+
 
 
   //pie-chart

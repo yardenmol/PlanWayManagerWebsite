@@ -5,12 +5,12 @@ var io = null;
 const firebase = require('firebase');
 
 router.get('/add-task', function (req,res,next) {
-    var task = { mid: "B3xhRH7bRCOkQi2yVOKwfqMxvcD2",
-                 uid: "hDoUHM5UYlRTqOET4WaNrnCDafu2",
-                 date: "2018-5-28",
-                 //date: new Date().toLocaleDateString(),
-                 destinations: [{did: "-LCxfdU6nxx9WvKKKoLN", isDone: true},
-                                {did: "-LCxgGbGE_S3eQHN3C6i", isDone: false}]}
+    var task = { mid: "JjBj9heumraFABJ2rtgg9I1qELu2",
+                 uid: "4ET5zo6dbJZ43evcISIHNbAMzc22",
+                 // date: "2018-5-28",
+                 date: new Date().toLocaleDateString(),
+                 destinations: [{did: "-LCy9qdC98JprgWzAPIw", isDone: true},
+                                {did: "-LDOo7gwpCHgUxAAHrz1", isDone: false}]}
     firebase.database().ref('tasks').push(task)
 });
 
@@ -37,8 +37,8 @@ router.get('/update-user', function (req,res,next) {
         address: "skjhdk",
         phone: "0524473654",
         mid: "JjBj9heumraFABJ2rtgg9I1qELu2",
-        latitude: 31.892773,
-        longitude: 34.81127200000003
+        latitude: 31.804381,
+        longitude: 34.655313999999976
     },error => {
         if(error==null)
             res.json({ success: true, message: "User edited successfully"});
@@ -164,7 +164,6 @@ function setIo(ioObject) {
 
 function getTasksOfManager(mid, client){
 
-    console.log("insideeeee server"+ mid);
     var COUNT = 0;
     var result=[];
     function whenFinishDest(i, size, user, j, usersSize, finishUser) {
@@ -183,7 +182,6 @@ function getTasksOfManager(mid, client){
     firebase.database().ref("tasks").orderByChild('date').equalTo('2018-5-28').on("value", function(snapshot) {
         COUNT = 0;
         result = [];
-        console.log("things change "+mid);
         var j = 0;
         var usersSize = 0;
         snapshot.forEach((t)=>{
@@ -231,6 +229,34 @@ function getTasksOfManager(mid, client){
         });
     });
 }
+
+
+router.post('/locations-of-users', function (req,res,next) {
+    let users = req.body.users;
+    let result = [];
+    let numOfUsers = users.length;
+    let i = 0;
+
+    users.forEach(function (u) {
+        firebase.database().ref("users").orderByKey().equalTo(u.uid).once("value", function (snapshot) {
+            snapshot.forEach(function (user) {
+                i++;
+                userVal = user.val();
+                result.push({uid: user.key, name: userVal.name,
+                                lat: userVal.latitude, lng: userVal.longitude});
+                whenFinish(i);
+            });
+        });
+
+    });
+
+    function whenFinish(index) {
+        if(index == numOfUsers){
+            res.json(result);
+        }
+    }
+
+});
 
 module.exports = {router: router,
                   setIo: setIo}

@@ -29,7 +29,7 @@ export class ManagerService {
   }
 
   updateTask(){
-    return this.http.get(this.domain + '/tasks/update-task').
+    return this.http.get(this.domain + '/tasks/update-user').
     map(res=>res);
   }
 
@@ -44,6 +44,13 @@ export class ManagerService {
     var headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
     return this.http.post(this.domain+'/tasks/manager-pie-data',mid,{headers:headers}).
+    map(res=>res);
+  }
+
+  getUsersLocations(users){
+    var headers = new HttpHeaders();
+    headers.append('Content-Type','application/json');
+    return this.http.post(this.domain+'/tasks/locations-of-users',users,{headers:headers}).
     map(res=>res);
   }
 }
