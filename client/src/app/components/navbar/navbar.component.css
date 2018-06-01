@@ -3,5 +3,55 @@
 }
 #logout{
   background-color: blue;
+  font-family: 'Varela Round';
+  color: black;
 
 }
+
+.nav-item{
+  font-family: 'Varela Round';
+  font-weight:bold;
+  color: black;
+}
+
+.navbar-default .navbar-nav>li>a{
+  color: black;
+  font-weight:bold;
+}
+
+
+img.cover {
+  width: 75%;
+
+  margin-left: 24%;
+  /* height: 50%; */
+  /* position: relative; */
+  box-shadow: 25px 0px 0px 0 white inset, 20px 0px 0px 0 white inset;
+}
+img.logo {
+  position: absolute;
+
+}
+
+shadow
+{
+  display:block;
+  position:relative;
+}
+
+.shadow:before {
+
+  margin-left: 24%;
+  display: block;
+  content: '';
+  position: absolute;
+  width: 75%;
+  height: 35%;
+  border: 2px solid #fff;
+  /*-moz-box-shadow: inset 10px 10px 50px #fff;*/
+
+  box-shadow: inset 20px -18px 50px 20px #fff;
+}
+
+
+

@@ -3,8 +3,19 @@ button.btn.btn-primary {
   margin-left: 80%;
 }
 
-.title{
-  margin-left: 45%;
+@font-face {
+  font-family: 'Varela Round';
+  src:  url('../../../assets/fonts/VarelaRound-Regular.ttf') format('ttf');
+}
+
+.table-title{
+  font-family: 'Varela Round';
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  line-height: 26.4px;
+  color: black;
+  text-align: center
 }
 .modal-content {z-index: 10000;}
 

@@ -19,7 +19,7 @@ router.post('/get-destinations',function (req,res,next) {
         result=[];
         snapshot.forEach(function(data) {
             let temp_j = data.val();
-            temp_j.uid = data.key;
+            temp_j.did = data.key;
             result.push(temp_j);
             // console.log(temp_j);
             // console.log(data.key);
