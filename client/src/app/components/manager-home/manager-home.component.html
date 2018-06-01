@@ -7,33 +7,39 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   </head>
 
+  <div id="tcontainer">
+    <h1>Welcome!</h1>
+    <br><br>
+    <p>Find the optimal travel distribution to your drivers<br>So let's get start!!!</p>
+  </div>
+
   <div class="container">
     <div class="row bs-wizard" style="border-bottom:0;">
       <div class="col-xs-3 bs-wizard-step complete">
         <div class="text-center bs-wizard-stepnum">Step 1</div>
         <div class="progress"><div class="progress-bar"></div></div>
-        <a href="#" class="bs-wizard-dot"></a>
+        <a [routerLink] = "['/user-management',this.mid]" class="bs-wizard-dot"></a>
         <div class="bs-wizard-info text-center">Define Your Drivers</div>
       </div>
 
       <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
         <div class="text-center bs-wizard-stepnum">Step 2</div>
         <div class="progress"><div class="progress-bar"></div></div>
-        <a href="#" class="bs-wizard-dot"></a>
+        <a [routerLink] = "['/destinations',this.mid]" class="bs-wizard-dot"></a>
         <div class="bs-wizard-info text-center">Define Your Destinations</div>
       </div>
 
       <div class="col-xs-3 bs-wizard-step active"><!-- complete -->
         <div class="text-center bs-wizard-stepnum">Step 3</div>
         <div class="progress"><div class="progress-bar"></div></div>
-        <a href="#" class="bs-wizard-dot"></a>
+        <a [routerLink] = "['/clustering',this.mid]" class="bs-wizard-dot"></a>
         <div class="bs-wizard-info text-center">Divide your tasks for today to your drivers in a smart way!</div>
       </div>
     </div>
   </div>
 </div>
 
-<div>
+<!--<div *ngIf="existsTask">-->
   <div  class="col-md-4 col-md-offset-1">
     <div *ngFor="let user of tasks  | filter: searchName1">
       <fieldset>
@@ -66,4 +72,4 @@
       </div>
     </agm-map>
   </div>
-</div>
+<!--</div>-->

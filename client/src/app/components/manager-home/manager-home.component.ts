@@ -21,6 +21,7 @@ export class ManagerHomeComponent implements OnInit {
 
   startUpdateLocations:boolean = true;
   emptyTasks:boolean = false;
+  existsTask:boolean = true;
 
   //google-maps
   latitude: number;
@@ -69,9 +70,13 @@ export class ManagerHomeComponent implements OnInit {
     //socket-io(tasks-of-manager)
     this.initSocketIoTasksOfManager().subscribe(data=>{
       if(data["success"] == false){
+        console.log("if");
         this.emptyTasks = true;
+        // this.existsTask = false;
       }
       else{
+        console.log("else");
+        // this.existsTask = true;
         this.emptyTasks = false;
         this.tasks = data["tasks"];
         var sumLat = 0;

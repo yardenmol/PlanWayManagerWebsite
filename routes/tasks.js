@@ -135,7 +135,7 @@ router.post('/tasks-of-manager', function (req,res,next) {
 function setIo(ioObject) {
     io = ioObject;
     io.sockets.on('connection',function (client) {
-        console.log('user connected- socket.io message');
+        // console.log('user connected- socket.io message');
 
         client.on('getPieData', function (data) {
             console.log("socket-io: " + data.mid);
@@ -169,7 +169,7 @@ function setIo(ioObject) {
 
 
         client.on('disconnect',function () {
-            console.log('client disconnectd- socket.io message');
+            // console.log('client disconnectd- socket.io message');
         });
     });
 
@@ -191,6 +191,7 @@ function getTasksOfManager(mid, client){
         COUNT++;
         if(COUNT == usersSize)
             client.emit('TasksOfManagerResult',{success: true, tasks:result});
+
     }
 
     var today = new Date().toLocaleDateString();
@@ -205,8 +206,10 @@ function getTasksOfManager(mid, client){
         });
 
         //check if the manager has no tasks for today
-        if(usersSize == 0)
+        if(usersSize == 0){
+            console.log("no users");
             client.emit('TasksOfManagerResult', {success: false});
+        }
 
         snapshot.forEach(function(data) { // data = some task
 

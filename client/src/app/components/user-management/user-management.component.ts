@@ -16,6 +16,7 @@ export class UserManagementComponent implements OnInit {
   newUser: any = {};
   userToEdit: any = {};
   uidToDelete: string;
+  message: string;
 
   //New User - address from googlemaps auto-complete
   @Output() notifyLocation: EventEmitter<any> = new EventEmitter<any>();
@@ -89,6 +90,7 @@ export class UserManagementComponent implements OnInit {
         this.getAllUsersOfManager();
       }
       else{
+        this.message = data["message"];
        console.log("register failed "+data["message"]);
       }
     });
@@ -96,6 +98,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   setIdToDelete(id){
+    this.message="";
     this.uidToDelete = id;
   }
 
@@ -106,6 +109,7 @@ export class UserManagementComponent implements OnInit {
         this.getAllUsersOfManager();
       }
       else{
+        this.message = data["message"];
         console.log("deletion failed "+data["message"]);
       }
     });
@@ -113,6 +117,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   setUserToEdit(user){
+    this.message="";
     this.userToEdit = user;
     this.address = user.address;
     this.latitude = user.latitude;
@@ -131,6 +136,7 @@ export class UserManagementComponent implements OnInit {
         this.getAllUsersOfManager();
       }
       else{
+        this.message = data["message"];
         console.log("edition failed "+data["message"]);
       }
     });
@@ -138,5 +144,9 @@ export class UserManagementComponent implements OnInit {
 
   clearUserToEdit(){
     this.userToEdit = {};
+  }
+
+  deleteMessage(){
+    this.message = "";
   }
 }
