@@ -124,6 +124,7 @@ export class UserManagementComponent implements OnInit {
     this.userToEdit.address = this.address;
     this.userToEdit.latitude = this.latitude;
     this.userToEdit.longitude = this.longitude;
+
     this.usersManagementService.editUser(this.userToEdit).subscribe(data=>{
       if (data["success"]) {
         console.log("edition success");

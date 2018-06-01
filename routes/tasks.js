@@ -5,18 +5,18 @@ var io = null;
 const firebase = require('firebase');
 
 router.get('/add-task', function (req,res,next) {
-    var task = { mid: "B3xhRH7bRCOkQi2yVOKwfqMxvcD2",
-                 uid: "hDoUHM5UYlRTqOET4WaNrnCDafu2",
-                 date: "2018-5-28",
-                 //date: new Date().toLocaleDateString(),
-                 destinations: [{did: "-LCxfdU6nxx9WvKKKoLN", isDone: true},
-                                {did: "-LCxgGbGE_S3eQHN3C6i", isDone: false}]}
+    var task = { mid: "JjBj9heumraFABJ2rtgg9I1qELu2",
+                 uid: "4ET5zo6dbJZ43evcISIHNbAMzc22",
+                 // date: "2018-5-28",
+                 date: new Date().toLocaleDateString(),
+                 destinations: [{did: "-LCy9qdC98JprgWzAPIw", isDone: true},
+                                {did: "-LDOo7gwpCHgUxAAHrz1", isDone: false}]}
     firebase.database().ref('tasks').push(task)
 });
 
 router.get('/update-task', function (req,res,next) {
     firebase.database().ref('tasks/'+'-LDbcmrRdunIKqO9IfgN').update({
-        date: "2018-5-28",
+        date: new Date().toLocaleDateString(),
         destinations: [{did: "-LCxfdU6nxx9WvKKKoLN", isDone: true},
                         {did: "-LCxgGbGE_S3eQHN3C6i", isDone: false}],
         mid: "JjBj9heumraFABJ2rtgg9I1qELu2",
@@ -26,25 +26,37 @@ router.get('/update-task', function (req,res,next) {
             res.json({ success: true, message: "User edited successfully"});
         else
             res.json({ success: false, message: error.message });
-    })
+    });
 });
 
 
 router.get('/update-user', function (req,res,next) {
-    firebase.database().ref('users/'+'3X0LU7kA24fYJk5PC8WO30ZVrQD3').update({
-        name: "Shir Shalev",
-        email: "yael@gmail.com",
-        address: "skjhdk",
-        phone: "0524473654",
+    firebase.database().ref('users/'+'j21l3zi74dWSSeDrAPWnfBCPGGy1').update({
+        name: "Tal Levi",
+        email: "tal@gmail.com",
+        address: "Tavor 4 Shoham",
+        phone: "0524376800",
         mid: "JjBj9heumraFABJ2rtgg9I1qELu2",
         latitude: 31.892773,
         longitude: 34.81127200000003
     },error => {
-        if(error==null)
-            res.json({ success: true, message: "User edited successfully"});
-        else
-            res.json({ success: false, message: error.message });
-    })
+        // if(error==null)
+        //     res.json({ success: true, message: "User edited successfully"});
+        // else
+        //     res.json({ success: false, message: error.message });
+    });
+
+    firebase.database().ref('tasks/'+'-LDbcmrRdunIKqO9IfgN').update({
+        date: new Date().toLocaleDateString(),
+        destinations: [{did: "-LCxz8-C0-xJKZczHRzX", isDone: true}],
+        mid: "JjBj9heumraFABJ2rtgg9I1qELu2",
+        uid: "j21l3zi74dWSSeDrAPWnfBCPGGy1",
+    },error => {
+        // if(error==null)
+        //     res.json({ success: true, message: "User edited successfully"});
+        // else
+        //     res.json({ success: false, message: error.message });
+    });
 });
 
 router.post('/tasks-of-manager', function (req,res,next) {
@@ -68,7 +80,8 @@ router.post('/tasks-of-manager', function (req,res,next) {
     }
 
     var mid = req.body.mid;
-    firebase.database().ref("tasks").orderByChild('date').equalTo('2018-5-28').once("value", function(snapshot) {
+    var today = new Date().toLocaleDateString();
+    firebase.database().ref("tasks").orderByChild('date').equalTo(today).once("value", function(snapshot) {
         var j = 0;
         var usersSize = 0;
         snapshot.forEach((t)=>{
@@ -128,6 +141,7 @@ function setIo(ioObject) {
             console.log("socket-io: " + data.mid);
             var mid = data.mid;
             var data = [];
+
             var today = new Date().toLocaleDateString();
             firebase.database().ref("tasks").orderByChild('date').equalTo(today).on("value", function (snapshot) {
                 var done = 0;
@@ -164,7 +178,6 @@ function setIo(ioObject) {
 
 function getTasksOfManager(mid, client){
 
-    console.log("insideeeee server"+ mid);
     var COUNT = 0;
     var result=[];
     function whenFinishDest(i, size, user, j, usersSize, finishUser) {
@@ -177,20 +190,24 @@ function getTasksOfManager(mid, client){
     function whenFinish(j, usersSize) {
         COUNT++;
         if(COUNT == usersSize)
-            client.emit('TasksOfManagerResult',result);
+            client.emit('TasksOfManagerResult',{success: true, tasks:result});
     }
 
     var today = new Date().toLocaleDateString();
     firebase.database().ref("tasks").orderByChild('date').equalTo(today).on("value", function(snapshot) {
         COUNT = 0;
         result = [];
-        console.log("things change "+mid);
         var j = 0;
         var usersSize = 0;
         snapshot.forEach((t)=>{
             if (t.val().mid == mid)
                 usersSize++;
         });
+
+        //check if the manager has no tasks for today
+        if(usersSize == 0)
+            client.emit('TasksOfManagerResult', {success: false});
+
         snapshot.forEach(function(data) { // data = some task
 
             var ret = data.val(); // some task
@@ -232,6 +249,34 @@ function getTasksOfManager(mid, client){
         });
     });
 }
+
+
+router.post('/locations-of-users', function (req,res,next) {
+    let users = req.body.users;
+    let result = [];
+    let numOfUsers = users.length;
+    let i = 0;
+
+    users.forEach(function (u) {
+        firebase.database().ref("users").orderByKey().equalTo(u.uid).once("value", function (snapshot) {
+            snapshot.forEach(function (user) {
+                i++;
+                userVal = user.val();
+                result.push({uid: user.key, name: userVal.name,
+                                lat: userVal.latitude, lng: userVal.longitude});
+                whenFinish(i);
+            });
+        });
+
+    });
+
+    function whenFinish(index) {
+        if(index == numOfUsers){
+            res.json(result);
+        }
+    }
+
+});
 
 module.exports = {router: router,
                   setIo: setIo}
