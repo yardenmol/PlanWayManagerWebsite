@@ -4,7 +4,6 @@ import {ManagerService} from "../../services/manager.service";
 //d3
 import {ElementRef, ViewChild, Input} from "@angular/core";
 import * as D3 from "d3-3";
-import {IData} from "../../data.interface";
 //socket-io
 import {Observable} from "rxjs/Observable";
 import * as io from "socket.io-client";
@@ -21,6 +20,7 @@ export class ManagerHomeComponent implements OnInit {
   locations:any = [];
 
   startUpdateLocations:boolean = true;
+  emptyTasks:boolean = false;
 
   //google-maps
   latitude: number;
@@ -45,30 +45,9 @@ export class ManagerHomeComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.mid = params['mid'];
     });
-
   }
 
   ngOnInit() {
-    console.log(this.mid);
-    //this.managerService.addTaskToUser().subscribe();
-
-    // this.managerService.getTasksOfManager({mid: this.mid}).subscribe(tasks=>{
-    //   console.log(tasks);
-    //   this.tasks = tasks;
-    //
-    //   var sumLat = 0;
-    //   var sumLng = 0;
-    //   for(var i =0;i<this.tasks.length;i++){
-    //     sumLat += this.tasks[i].latitude;
-    //     sumLng += this.tasks[i].longitude;
-    //   }
-    //   this.latitude = sumLat / this.tasks.length;
-    //   this.longitude = sumLng / this.tasks.length;
-    //
-    //   console.log(this.longitude);
-    //   console.log(this.latitude);
-    // });
-
     //google-maps
     this.zoom = 10;
 
@@ -88,34 +67,38 @@ export class ManagerHomeComponent implements OnInit {
     });
 
     //socket-io(tasks-of-manager)
-    this.initSocketIoTasksOfManager().subscribe(tasks=>{
-      console.log(tasks);
-      this.tasks = tasks;
-      var sumLat = 0;
-      var sumLng = 0;
-      for(var i = 0;i < this.tasks.length; i++){
-        this.locations.push({lat: this.tasks[i].latitude,
-                             lng: this.tasks[i].longitude,
-                             name: this.tasks[i].name,
-                             uid: this.tasks[i].uid});
-        sumLat += this.tasks[i].latitude;
-        sumLng += this.tasks[i].longitude;
+    this.initSocketIoTasksOfManager().subscribe(data=>{
+      if(data["success"] == false){
+        this.emptyTasks = true;
       }
-      console.log("before check " + this.startUpdateLocations);
-      if(this.startUpdateLocations){
-        console.log("inside if");
-        this.intervalOfUpdateUsersLocations();
-        this.startUpdateLocations = false;
+      else{
+        this.emptyTasks = false;
+        this.tasks = data["tasks"];
+        var sumLat = 0;
+        var sumLng = 0;
+        this.locations = [];
+        for(var i = 0;i < this.tasks.length; i++){
+          this.locations.push({lat: this.tasks[i].latitude,
+            lng: this.tasks[i].longitude,
+            name: this.tasks[i].name,
+            uid: this.tasks[i].uid});
+          sumLat += this.tasks[i].latitude;
+          sumLng += this.tasks[i].longitude;
+        }
+        if(this.startUpdateLocations){
+          this.intervalOfUpdateUsersLocations();
+          this.startUpdateLocations = false;
+        }
+        this.latitude = sumLat / this.tasks.length;
+        this.longitude = sumLng / this.tasks.length;
       }
-      this.latitude = sumLat / this.tasks.length;
-      this.longitude = sumLng / this.tasks.length;
-    })
+
+    });
 
   }
 
   //test
   editUser(mid){
-    console.log("after edit");
     this.managerService.updateTask().subscribe();
   }
 
@@ -124,17 +107,15 @@ export class ManagerHomeComponent implements OnInit {
     console.log("checking locations....");
     this.managerService.getUsersLocations({users:this.locations}).subscribe(locations=>{
       console.log(locations);
-      this.locations = locations;
+      if(this.locations != locations){
+        this.locations = locations;
+      }
     });
   }
 
   intervalOfUpdateUsersLocations(){
-    console.log("blabla");
     setInterval(()=>{this.updateUsersLocations()}, 60*1000);
   }
-
-
-
 
   //pie-chart
   private setup(): void {
