@@ -18,4 +18,13 @@ export class ClusteringService {
 
   }
 
+  sendTasks(tasks){
+    console.log(tasks);
+    var headers = new HttpHeaders();
+    headers.append('Content-Type','application/json');
+    return this.http.post(this.domain+'/clustering/send-tasks',tasks,{headers:headers}).
+    map(res=>res);
+
+  }
+
 }

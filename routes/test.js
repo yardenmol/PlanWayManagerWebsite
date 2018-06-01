@@ -26,20 +26,21 @@ const domain = 'http://193.106.55.167:8889/directions/api/v1.0/cluster';
 //
 
 
-var myJSONObject = {source:"Rishon Lezion" ,locations: ["Rishon Lezion", "Ashdod", "Ramat Gan", "Bat Yam"], driversAmount: 2 };
-
-
-
-var options = {
-    uri: domain,
-    method: 'POST',
-    json:  { "source":myJSONObject.source, "locations": myJSONObject.locations, "driversAmount": myJSONObject.driversAmount.toString()}
-
-};
-
-request(options, function (error, response, body) {
-    if (!error) {
-        console.log(response.body) // Print the shortened url.
-    }
-    else console.log(error)
-});
+// var myJSONObject = {source:"Rishon Lezion" ,locations: ["Rishon Lezion", "Ashdod", "Ramat Gan", "Bat Yam"], driversAmount: 2 };
+//
+//
+//
+// var options = {
+//     uri: domain,
+//     method: 'POST',
+//     json:  { "source":myJSONObject.source, "locations": myJSONObject.locations, "driversAmount": myJSONObject.driversAmount.toString()}
+//
+// };
+//
+// request(options, function (error, response, body) {
+//     if (!error) {
+//         console.log(response.body) // Print the shortened url.
+//     }
+//     else console.log(error)
+// });
+console.log(new Date().toLocaleDateString());

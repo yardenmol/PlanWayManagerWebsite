@@ -16,6 +16,7 @@ export class ClusteringComponent implements OnInit {
   public selected = [];
   public selectedDriver = [];
   public tracks:any;
+  public tracksToShow = [];
   constructor(private clusteringService: ClusteringService,private destinationService:DestinationService,private usersManagementService:UsersManagementService,private route:ActivatedRoute) {
     this.showResult = true;
     this.route.params.subscribe(params => {
@@ -33,7 +34,7 @@ export class ClusteringComponent implements OnInit {
             this.deiverList.push({id:parseInt(id), name:data[id].name, data:data[id]});
 
           }
-          console.log(this.deiverList);
+          // console.log(this.deiverList);
         }
         else{
           console.log("getUsers failed");
@@ -50,10 +51,10 @@ export class ClusteringComponent implements OnInit {
           this.addrList = [];
           for (let id in data){
 
-            this.addrList.push({id:parseInt(id), name:data[id].name, data:data[id]});
+              this.addrList.push({id:parseInt(id), name:data[id].name, data:data[id]});
 
           }
-          console.log(this.addrList);
+          // console.log(this.addrList);
 
         }
         else{
@@ -76,17 +77,20 @@ export class ClusteringComponent implements OnInit {
     this.showResult= true;
     let planAddress = [];
     for (let i in this.selected) {
-      planAddress.push(this.addrList[this.selected[i]].data.address);
+      // console.log(this.addrList[this.selected[i]].data);
+      planAddress.push(this.addrList[this.selected[i]].data.latitude.toString() +" "+this.addrList[this.selected[i]].data.longitude.toString());
+
     }
-    console.log(planAddress);
+
+    // console.log(planAddress);
     let cluster = {};
     cluster['locations'] = planAddress;
     cluster['driversAmount'] = this. selectedDriver.length;
-    console.log(cluster);
+    // console.log(cluster);
 
     this.clusteringService.sendCluster(cluster).subscribe(data => {
-
-      console.log(JSON.stringify(data["data"]));
+      this.tracksToShow = [];
+      // console.log(JSON.stringify(data["data"]));
       if (data["success"]) {
         this.showResult= false;
         let tempDriver =[];
@@ -95,13 +99,46 @@ export class ClusteringComponent implements OnInit {
           tempDriver.push(this.deiverList[this.selectedDriver[parseInt(i)]])
         }
         this.tracks = [];
-        // console.log(data.data.driversAmount);
+
+
+        //getDriver
         for(let i=0; i< parseInt(data['data'].driversAmount); i++){
-          this.tracks.push({driver:tempDriver[i],destinations: data['data'].tracks[i]})
+          let task = {
+            date:"",
+            destinations:[],
+            mid:"",
+            uid:""
+          };
+          let showTask={
+            driver:"",
+            destinations:[]
+          };
+
+          //build task
+          let d = new Date();
+          task.date = d.getFullYear()+ "-"+ (d.getMonth()+1) +"-" +d.getDate();
+
+          task.uid = tempDriver[i].data.uid;
+          task.mid = this.mid;
+
+
+          //build task to show
+          showTask.driver =tempDriver[i].data;
+
+          let temp = data['data'].tracks[i];//array of tasks per user lat long
+          // console.log(temp);
+          for (let pos in temp){
+            let r = temp[pos].split(" ");
+            task.destinations.push({did:this.getAddressByLocations(r[0],r[1]).did, isDone:false});
+            showTask.destinations.push(this.getAddressByLocations(r[0],r[1]));
+          }
+          // console.log(task);
+          this.tracks.push(task);
+          this.tracksToShow.push(showTask);
         }
 
-        console.log(this.tracks);
-
+        //  console.log(this.tracks);
+        // console.log(this.tracksToShow);
         console.log("getDestinations success");
       }
       else {
@@ -114,5 +151,26 @@ export class ClusteringComponent implements OnInit {
 
   }
 
+  sendTheTasks(){
+    console.log("send");
+    this.clusteringService.sendTasks({mid:this.mid, tasks:this.tracks}).subscribe(data=>{
+      if (data["success"]) {
+        console.log("Tasks success");
+      }
+      else{
+        console.log("Tasks failed "+data["message"]);
+      }
+    });
+
+  }
+
+  private getAddressByLocations(lat, long){
+    for (let addr in this.addrList){
+      if(this.addrList[addr]["data"].latitude==lat && this.addrList[addr]["data"].longitude==long) {
+        return this.addrList[addr]["data"];
+      }
+    }
+
+  }
 }
 

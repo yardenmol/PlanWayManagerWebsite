@@ -4,7 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-// var request = require('request');
+const firebase = require('firebase');
 
 const domain = "http://193.106.55.167:8889/directions/api/v1.0/cluster";
 
@@ -19,7 +19,7 @@ router.post('/send-cluster',function (req,res,next) {
 
     };
     request(options, function (error, response, body) {
-        console.log(response.body);
+        // console.log(response.body);
         if (!error) {
             // console.log(response.body); // Print the shortened url.
             res.json({success: true, data:response.body});
@@ -29,6 +29,18 @@ router.post('/send-cluster',function (req,res,next) {
         }
     });
 });
+
+
+router.post('/send-tasks',function (req,res,next) {
+    console.log(req.body);
+    let tasks = req.body.tasks;
+    for (let i in req.body.tasks) {
+        firebase.database().ref('tasks').push(tasks[i]);
+
+    }
+    res.json({success: true});
+});
+
 
 module.exports = {router: router};
 

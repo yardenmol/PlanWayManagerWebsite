@@ -128,8 +128,8 @@ function setIo(ioObject) {
             console.log("socket-io: " + data.mid);
             var mid = data.mid;
             var data = [];
-
-            firebase.database().ref("tasks").orderByChild('date').equalTo('2018-5-28').on("value", function (snapshot) {
+            var today = new Date().toLocaleDateString();
+            firebase.database().ref("tasks").orderByChild('date').equalTo(today).on("value", function (snapshot) {
                 var done = 0;
                 var notDone = 0;
                 snapshot.forEach(function (t) {
@@ -180,7 +180,8 @@ function getTasksOfManager(mid, client){
             client.emit('TasksOfManagerResult',result);
     }
 
-    firebase.database().ref("tasks").orderByChild('date').equalTo('2018-5-28').on("value", function(snapshot) {
+    var today = new Date().toLocaleDateString();
+    firebase.database().ref("tasks").orderByChild('date').equalTo(today).on("value", function(snapshot) {
         COUNT = 0;
         result = [];
         console.log("things change "+mid);

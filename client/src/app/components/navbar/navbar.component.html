@@ -1,5 +1,9 @@
-<img src="../../../assets/images/Logo.png" height="110px ">
 
+<img class="logo" src="../../../assets/images/Logo.png" height="110px ">
+<!--<div id="image-container"><div>-->
+<div class="shadow">
+  <img class="cover" src="../../../assets/images/cover.png">
+</div>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -21,7 +25,7 @@
         <li class="nav-item"><a class="nav-link" [routerLink] = "['/destinations',this.mid]">Destinations</a></li>
         <li class="nav-item"><a class="nav-link" (click)="goClustering()" >Clustering</a></li>
       </ul>
-    
+
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">LogOut</a></li>
       </ul>

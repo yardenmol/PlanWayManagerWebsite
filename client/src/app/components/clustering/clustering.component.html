@@ -1,3 +1,4 @@
+
 <app-navbar></app-navbar>
 <div *ngIf="showResult" id="loading" class="modal fade" >
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +24,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="popUp" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -39,16 +40,17 @@
             <h4 class="modal-title">Modal Header</h4>
           </div>
           <div class="modal-body">
-            <div *ngFor="let tr of tracks">
-                <p>{{tr.driver.name}}</p>
+            <div *ngFor="let tr of tracksToShow">
+                <p><b>{{tr.driver.name}}</b></p>
               <div *ngFor="let dest of tr.destinations">
-                <p>{{dest}}</p>
+                <p>{{dest.address}}</p>
               </div>
+              <hr>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <input type="submit" class="btn btn-info" data-dismiss="modal" value="OK">
+            <input  [routerLink] = "['/manager-home',mid]" type="submit" class="btn btn-info" (click)="sendTheTasks()"  data-dismiss="modal" value="OK">
           </div>
         </div>
 
@@ -62,7 +64,7 @@
 
 
 <div class="row">
-  <h1 class="title">Destinations</h1>
+  <h1 class="table-title">Destinations</h1>
   <div class="col-md-8 col-md-offset-2">
     <ng2-dual-list-box [data]="addrList" valueField="id" textField="name" availableText = "Available Address" selectedText = "Selected Address"
                        [(ngModel)]="selected"
@@ -74,8 +76,9 @@
 
   </div>
 </div>
+<hr>
 <div class="row">
-  <h1 class="title">Drivers</h1>
+  <h1 class="table-title">Drivers</h1>
   <div class="col-md-8 col-md-offset-2">
     <ng2-dual-list-box [data]="deiverList" valueField="id" textField="name" availableText = "Available Users" selectedText = "Selected Users"
                        [(ngModel)]="selectedDriver"
@@ -89,5 +92,5 @@
 </div>
 <!--<button name="plan btn" type="button" class="btn btn-primary" (click)="sendAddress()">Plan a Way!</button>-->
 <div>
-<a data-target="#myModal" class="btn btn-primary" data-toggle="modal" (click)="sendAddress()"> <span>Plan a Way!</span></a>
+<a data-target="#popUp" class="btn btn-primary" data-toggle="modal" (click)="sendAddress()"> <span>Plan a Way!</span></a>
 </div>
