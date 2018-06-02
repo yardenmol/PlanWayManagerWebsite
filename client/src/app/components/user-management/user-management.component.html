@@ -39,6 +39,7 @@
 </head>
 <body>
 <div class="container">
+  <p id="errorMessage" style="color:red; font-family:'Trebuchet MS';font-size:100%;">{{message}}</p>
   <div class="table-wrapper">
     <div class="table-title">
       <div class="row">
@@ -46,7 +47,7 @@
           <h2>Manage <b>Drivers</b></h2>
         </div>
         <div class="col-sm-6">
-          <a href="#addUser" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Driver</span></a>
+          <a href="#addUser" class="btn btn-success" data-toggle="modal" (click)="deleteMessage()"><i class="material-icons">&#xE147;</i> <span>Add New Driver</span></a>
         </div>
       </div>
     </div>
