@@ -15,12 +15,12 @@ import * as io from "socket.io-client";
 })
 export class ManagerHomeComponent implements OnInit {
 
-
   public tasks;
   mid: string;
   locations:any = [];
 
   startUpdateLocations:boolean = true;
+  //new user
   emptyTasks:boolean = true;
 
   //google-maps
@@ -37,7 +37,6 @@ export class ManagerHomeComponent implements OnInit {
   private height: number;
   private radius: number;
   private htmlElement: HTMLElement;
-  // private pieData: IData[];
   private pieData: any;
 
   //socket-io
@@ -49,6 +48,7 @@ export class ManagerHomeComponent implements OnInit {
     });
   }
 
+  //hide the welcome part
   removeSquere(){
     document.getElementById('square').style.display = 'none';
 
@@ -62,8 +62,6 @@ export class ManagerHomeComponent implements OnInit {
       setTimeout(function(){ document.getElementById('square').style.display = 'none'; }, 2000);
 
     }
-
-    // this.renderer.setElementStyle(this.square, 'Background', 'black');
   }
 
   ngOnInit() {
@@ -90,13 +88,9 @@ export class ManagerHomeComponent implements OnInit {
     //socket-io(tasks-of-manager)
     this.initSocketIoTasksOfManager().subscribe(data=>{
       if(data["success"] == false){
-        console.log("if");
         this.emptyTasks = true;
-        // this.existsTask = false;
       }
       else{
-        console.log("else");
-        // this.existsTask = true;
         this.emptyTasks = false;
         this.tasks = data["tasks"];
         var sumLat = 0;

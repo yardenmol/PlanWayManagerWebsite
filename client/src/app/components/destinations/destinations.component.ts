@@ -84,15 +84,13 @@ export class DestinationsComponent implements OnInit {
 }
 saveAddress(){
 
-    // console.log(this.address);
-    // console.log(this.latitude);
-    // console.log(this.longitude);
-    // console.log(this.mid);
    this.destinationService.addAddress({mid:this.mid,address:this.address,latitude:this.latitude, longitude: this.longitude,name:this.name }).subscribe(data => {
      if (data["success"]) {
        console.log("success");
        //this.router.navigate(['/usermanagement',data["mid"]]);
        this.getDestinations();
+       this.name = "";
+       this.address = "";
      }
      else{
        console.log("register failed")

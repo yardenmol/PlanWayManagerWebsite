@@ -207,7 +207,6 @@ function getTasksOfManager(mid, client){
 
         //check if the manager has no tasks for today
         if(usersSize == 0){
-            console.log("no users");
             client.emit('TasksOfManagerResult', {success: false});
         }
 
