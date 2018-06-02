@@ -118,10 +118,10 @@ saveAddress(){
 
   setIdToDelete(id){
     this.uidToDelete = id;
+
   }
 
   deleteDestination(){
-
     this.destinationService.deleteDestination({uid:this.uidToDelete}).subscribe(data=>{
       if (data["success"]) {
         console.log("delete success");

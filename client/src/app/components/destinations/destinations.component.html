@@ -55,12 +55,7 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th>
-          <span class="custom-checkbox">
-              <input type="checkbox" id="selectAll">
-              <label for="selectAll"></label>
-          </span>
-        </th>
+
         <th>Name</th>
         <th>Address</th>
         <th>Actions</th>
@@ -68,17 +63,12 @@
       </thead>
       <tbody>
       <tr *ngFor="let dest of destinations">
-        <td>
-          <span class="custom-checkbox">
-              <input type="checkbox" id="checkbox3" name="options[]" value="1">
-              <label for="checkbox3"></label>
-          </span>
-        </td>
+
         <td>{{ dest.name }}</td>
         <td>{{ dest.address }}</td>
         <td>
           <a href="#editAddress" class="edit" (click)="setUserToEdit(dest)" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-          <a href="#deleteAddress" (click)="setIdToDelete(dest.uid)" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+          <a href="#deleteAddress" (click)="setIdToDelete(dest.did)" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 
         </td>
       </tr>
