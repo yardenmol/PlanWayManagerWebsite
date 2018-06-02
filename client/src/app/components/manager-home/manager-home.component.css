@@ -32,14 +32,6 @@ agm-map {
 .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
 /*END Form Wizard*/
 
-#tcontainer {
-  display: flex;
-  justify-content: center;
-}
-.center {
-  width: 800px;
-}
-
 [hidden] {
   display: none !important;
 }
@@ -47,9 +39,42 @@ agm-map {
 
 #square{
   width: 100%;
-  height: 322px;
+  height: 400px;
   Background: #fff;
   position: fixed;
   z-index: 1;
+}
 
+.center {
+  margin: auto;
+  width: 75%;
+  padding: 10px;
+}
+
+.container {
+  margin-top: 27%;
+}
+
+.img-with-text {
+  text-align: justify;
+}
+
+p{
+  font-size: 150%;
+  font-family: 'Varela Round';
+  font-weight:bold;
+  color: #435d7d;
+}
+
+.img-with-text img {
+  display: block;
+  margin: 0 auto;
+}
+p.col-md-8 {
+  margin-left: 15%;
+}
+
+img.col-md-8 {
+
+  left: 12%;
 }
