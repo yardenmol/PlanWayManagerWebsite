@@ -94,7 +94,8 @@ export class UserManagementComponent implements OnInit {
        console.log("register failed "+data["message"]);
       }
     });
-    this.newUser={};
+    this.newUser = {};
+    this.address = "";
   }
 
   setIdToDelete(id){

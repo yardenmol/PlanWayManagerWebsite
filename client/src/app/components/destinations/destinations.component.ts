@@ -59,7 +59,7 @@ export class DestinationsComponent implements OnInit {
 
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
-          this.address =place.formatted_address
+          this.address =place.formatted_address;
           // this.notifyLocation.emit({lat: this.latitude, lng:this.longitude, address: place.formatted_address});
 
         });
@@ -88,9 +88,10 @@ saveAddress(){
      if (data["success"]) {
        console.log("success");
        //this.router.navigate(['/usermanagement',data["mid"]]);
-       this.getDestinations();
        this.name = "";
        this.address = "";
+       this.getDestinations();
+
      }
      else{
        console.log("register failed")

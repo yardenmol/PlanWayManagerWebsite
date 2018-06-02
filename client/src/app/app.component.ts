@@ -6,6 +6,7 @@ import {ManagerService} from "./services/manager.service";
 import {UsersManagementService} from "./services/users-management.service";
 import {DestinationService} from "./services/destination.service";
 import {ClusteringService} from "./services/clustering.service";
+import {Title} from '@angular/platform-browser'
 
 @Component({
   selector: 'app-root',
@@ -14,4 +15,7 @@ import {ClusteringService} from "./services/clustering.service";
   providers:[TaskService, UserService, AdminService, ManagerService, UsersManagementService,DestinationService,ClusteringService]
 })
 export class AppComponent {
+  public constructor (private titleSevice: Title){
+    this.titleSevice.setTitle("Plan A Way");
+  }
 }

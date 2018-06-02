@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule,Title } from '@angular/platform-browser';
 import { NgModule,ApplicationRef } from '@angular/core';
 import { CommonModule } from '@angular/common'
 import { AppComponent } from './app.component';
@@ -46,7 +46,7 @@ import { DualListBoxModule } from 'ng2-dual-list-box'
     Ng2SearchPipeModule,
     RouterModule.forRoot(appRoutes,{useHash:true})
   ],
-  providers: [],
+  providers: [Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
