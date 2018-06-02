@@ -1,12 +1,46 @@
 <app-navbar></app-navbar>
 
-<div *ngIf="emptyTasks">
-  <head>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-  </head>
+<div class="params" [hidden] = "emptyTasks"  class="init">
+  {{removeInit()}}
 
+  <div  class="col-md-4 col-md-offset-1">
+    <div *ngFor="let user of tasks  | filter: searchName1">
+      <fieldset>
+        <legend>
+          {{user.name}}
+          <input type="button" (click)="editUser(user.mid)" value="Edit" class="btn btn-default">
+        </legend>
+        <div *ngFor="let dest of user.destinations">
+          <div>
+            <input type="checkbox" [checked]="dest.isDone" disabled>
+            <label>{{dest.name}}</label>
+          </div>
+        </div>
+      </fieldset>
+      <br>
+    </div>
+  </div>
+
+  <div class="pie">
+    <div #containerPieChart></div>
+  </div>
+  <div  class="col-md-10 col-md-offset-1">
+    <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+      <div *ngFor="let location of locations">
+        <agm-marker [latitude]="location.lat" [longitude]="location.lng" [iconUrl]="'../../../assets/images/track2.png'">
+          <agm-info-window>{{location.name}}</agm-info-window>
+        </agm-marker>
+      </div>
+    </agm-map>
+  </div>
+</div>
+
+
+
+
+
+<div class="init" id ="init" >
+  <div id="square"></div>
   <div id="tcontainer">
     <h1>Welcome!</h1>
     <br><br>
@@ -39,37 +73,4 @@
   </div>
 </div>
 
-<!--<div *ngIf="existsTask">-->
-  <div  class="col-md-4 col-md-offset-1">
-    <div *ngFor="let user of tasks  | filter: searchName1">
-      <fieldset>
-        <legend>
-          {{user.name}}
-          <input type="button" (click)="editUser(user.mid)" value="Edit" class="btn btn-default">
-        </legend>
-        <div *ngFor="let dest of user.destinations">
-          <div>
-            <input type="checkbox" [checked]="dest.isDone" disabled>
-            <label>{{dest.name}}</label>
-          </div>
-        </div>
-      </fieldset>
-      <br>
-    </div>
-  </div>
 
-  <div class="pie">
-    <div #containerPieChart></div>
-  </div>
-
-
-  <div  class="col-md-10 col-md-offset-1">
-    <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-      <div *ngFor="let location of locations">
-        <agm-marker [latitude]="location.lat" [longitude]="location.lng" [iconUrl]="'../../../assets/images/track2.png'">
-          <agm-info-window>{{location.name}}</agm-info-window>
-        </agm-marker>
-      </div>
-    </agm-map>
-  </div>
-<!--</div>-->

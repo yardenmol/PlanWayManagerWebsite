@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Renderer } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ManagerService} from "../../services/manager.service";
 //d3
@@ -15,13 +15,13 @@ import * as io from "socket.io-client";
 })
 export class ManagerHomeComponent implements OnInit {
 
+
   public tasks;
   mid: string;
   locations:any = [];
 
   startUpdateLocations:boolean = true;
-  emptyTasks:boolean = false;
-  existsTask:boolean = true;
+  emptyTasks:boolean = true;
 
   //google-maps
   latitude: number;
@@ -30,6 +30,7 @@ export class ManagerHomeComponent implements OnInit {
 
   //piechart
   @ViewChild("containerPieChart") element: ElementRef;
+  @ViewChild("square") square: ElementRef;
   private host: D3.Selection;
   private svg: D3.Selection;
   private width: number;
@@ -42,13 +43,31 @@ export class ManagerHomeComponent implements OnInit {
   //socket-io
   socket: SocketIOClient.Socket;
 
-  constructor(private route:ActivatedRoute, private managerService: ManagerService,) {
+  constructor(private route:ActivatedRoute, private managerService: ManagerService,private elementRef: ElementRef, private renderer: Renderer) {
     this.route.params.subscribe(params => {
       this.mid = params['mid'];
     });
   }
 
+  removeSquere(){
+    document.getElementById('square').style.display = 'none';
+
+    // this.renderer.setElementStyle(this.square, 'Background', 'black');
+  }
+  removeInit(){
+    if(!this.emptyTasks){
+    document.getElementById('init').style.display = 'none';
+    }
+    else {
+      setTimeout(function(){ document.getElementById('square').style.display = 'none'; }, 2000);
+
+    }
+
+    // this.renderer.setElementStyle(this.square, 'Background', 'black');
+  }
+
   ngOnInit() {
+
     //google-maps
     this.zoom = 10;
 
@@ -66,6 +85,7 @@ export class ManagerHomeComponent implements OnInit {
       this.buildSVG();
       this.buildPie();
     });
+
 
     //socket-io(tasks-of-manager)
     this.initSocketIoTasksOfManager().subscribe(data=>{
@@ -90,7 +110,7 @@ export class ManagerHomeComponent implements OnInit {
           sumLat += this.tasks[i].latitude;
           sumLng += this.tasks[i].longitude;
         }
-        if(this.startUpdateLocations){
+         if(this.startUpdateLocations){
           this.intervalOfUpdateUsersLocations();
           this.startUpdateLocations = false;
         }
